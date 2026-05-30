@@ -18,6 +18,7 @@ const EMPTY = {
   phone: '',
   note: '',
   status: 'active',
+  event_type: 'standup',
 }
 
 export default function EventForm({ event }) {
@@ -68,6 +69,18 @@ export default function EventForm({ event }) {
         <div className={styles.formGrid}>
 
           <div className={`${styles.sectionTitle}`}>Informacije o događaju</div>
+
+          <div className={`${styles.field} ${styles.fullWidth}`}>
+            <label className={styles.label}>Tip događaja *</label>
+            <select
+              className={styles.select}
+              value={form.event_type}
+              onChange={e => set('event_type', e.target.value)}
+            >
+              <option value="standup">🎤 Stand Up</option>
+              <option value="zurka">🎉 Žurka</option>
+            </select>
+          </div>
 
           <div className={`${styles.field} ${styles.fullWidth}`}>
             <label className={styles.label}>Naziv predstave *</label>

@@ -39,6 +39,9 @@ export default function AdminEventRow({ event }) {
       </td>
       <td>
         <div className={styles.actions}>
+          <Link href={`/admin/events/${event.id}`} className={styles.editBtn} style={{ background: 'rgba(233,30,140,0.08)', borderColor: 'var(--pink)', color: 'var(--pink)' }}>
+            📋 Rezervacije
+          </Link>
           <Link href={`/admin/events/edit?id=${event.id}`} className={styles.editBtn}>
             ✏️ Uredi
           </Link>
