@@ -34,22 +34,6 @@ export default async function AdminDashboard() {
           <div className={styles.statLabel}>Aktivni eventi</div>
           <div className={`${styles.statValue} ${styles.green}`}>{activeCount}</div>
         </div>
-        <div className={styles.statCard}>
-          <div className={styles.statLabel}>Prodato karte</div>
-          <div className={`${styles.statValue} ${styles.pink}`}>{totalSold}</div>
-        </div>
-        <div className={styles.statCard}>
-          <div className={styles.statLabel}>Rezervisano</div>
-          <div className={`${styles.statValue} ${styles.blue}`}>{totalReserved}</div>
-        </div>
-        <div className={styles.statCard}>
-          <div className={styles.statLabel}>Potvrđeno</div>
-          <div className={`${styles.statValue} ${styles.yellow}`}>{totalConfirmed}</div>
-        </div>
-        <div className={styles.statCard}>
-          <div className={styles.statLabel}>Lista čekanja</div>
-          <div className={`${styles.statValue} ${styles.purple}`}>{totalWaitlist}</div>
-        </div>
       </div>
 
       <div className={styles.tableWrapper}>
