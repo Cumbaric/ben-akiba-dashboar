@@ -154,9 +154,92 @@
   text-transform: uppercase;
 }
 
+/* ── MOBILE CARDS ─────────────────────────────── */
+.mobileCards {
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mobileCard {
+  background: #13131f;
+  border: 1px solid #1e1e35;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.mobileCard.cancelled {
+  opacity: 0.45;
+}
+
+.mobileCardTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.mobileDate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #0d0d1a;
+  border: 1px solid #e91e8c44;
+  border-radius: 8px;
+  padding: 8px 12px;
+  min-width: 56px;
+}
+
+.mobileDayName {
+  font-size: 10px;
+  font-weight: 800;
+  color: #e91e8c;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.mobileDateNum {
+  font-size: 13px;
+  font-weight: 600;
+  color: #ccccdd;
+  margin-top: 2px;
+}
+
+.mobileInfo {
+  flex: 1;
+}
+
+.mobileTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.3;
+}
+
+.mobilePerformer {
+  font-size: 13px;
+  color: #9999bb;
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+.mobileCardBottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px solid #1a1a2e;
+}
+
+.mobileTime {
+  font-size: 13px;
+  color: #888aaa;
+}
+
 @media (max-width: 640px) {
-  .table thead th:nth-child(4),
-  .table tbody td:nth-child(4) { display: none; }
-  .table tbody td { padding: 14px 12px; }
+  .tableWrapper { display: none; }
+  .mobileCards { display: flex; }
   .backBtn { top: 16px; }
+  .header { padding: 32px 16px 24px; }
 }

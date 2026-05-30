@@ -88,6 +88,42 @@ export default async function ZurkePage() {
           </table>
         </div>
 
+        {/* ── MOBILE CARDS ── */}
+        <div className={styles.mobileCards}>
+          {!events || events.length === 0 ? (
+            <div className={styles.emptyState}>Nema zakazanih žurki.</div>
+          ) : (
+            events.map((event) => {
+              const d = new Date(event.date)
+              const day = DAY_NAMES[d.getDay()]
+              const date = `${String(d.getDate()).padStart(2,'0')}.${MONTH_NAMES[d.getMonth()]}.`
+              return (
+                <div key={event.id} className={`${styles.mobileCard} ${event.status === 'cancelled' ? styles.cancelled : ''}`}>
+                  <div className={styles.mobileCardTop}>
+                    <div className={styles.mobileDate}>
+                      <span className={styles.mobileDayName}>{day}</span>
+                      <span className={styles.mobileDateNum}>{date}</span>
+                    </div>
+                    <div className={styles.mobileInfo}>
+                      <div className={styles.mobileTitle}>
+                        {event.title}
+                        {event.status === 'cancelled' && (
+                          <span className={styles.cancelBadge} style={{ marginLeft: 8 }}>Otkazano</span>
+                        )}
+                      </div>
+                      <div className={styles.mobilePerformer}>{event.performer}</div>
+                    </div>
+                  </div>
+                  <div className={styles.mobileCardBottom}>
+                    <span className={styles.mobileTime}>🕐 {event.time}</span>
+                    <span className={styles.priceBadge}>{Number(event.price).toLocaleString('sr-RS')} RSD</span>
+                  </div>
+                </div>
+              )
+            })
+          )}
+        </div>
+
         <div className={styles.footerNote}>
           Ben Akiba &nbsp;·&nbsp; Belgrade &nbsp;·&nbsp; Good Vibes Only
         </div>
