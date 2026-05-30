@@ -242,4 +242,6 @@
   .mobileCards { display: flex; }
   .backBtn { top: 16px; }
   .header { padding: 32px 16px 24px; }
+  .container { padding: 0 10px; }
+  .mobileCard { padding: 14px 12px; }
 }
