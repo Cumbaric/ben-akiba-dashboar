@@ -1,5 +1,6 @@
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
+import Image from 'next/image'
 import styles from './zurke.module.css'
 
 const DAY_NAMES = ['NED', 'PON', 'UTO', 'SRE', 'ČET', 'PET', 'SUB']
@@ -20,8 +21,7 @@ export default async function ZurkePage() {
         <Link href="/" className={styles.backBtn}>← Nazad</Link>
 
         <div className={styles.logoWrap}>
-          <div className={styles.logoText}>Ben Akiba</div>
-          <div className={styles.logoSub}>Comedy Club &amp; Bar · White Lounge &amp; Art Gallery</div>
+          <Image src="/logo.png" alt="Ben Akiba" width={200} height={86} className={styles.logoImg} priority />
         </div>
 
         <div className={styles.zurkaBadge}>

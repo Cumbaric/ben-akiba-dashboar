@@ -25,22 +25,13 @@
 
 .backBtn:hover { color: #e91e8c; }
 
-.logoText {
-  font-size: 56px;
-  font-weight: 400;
-  font-style: italic;
-  font-family: 'Pinyon Script', 'Great Vibes', 'Dancing Script', cursive;
-  color: #fff;
-  line-height: 1;
-  letter-spacing: -2px;
-}
-
-.logoSub {
-  font-size: 10px;
-  letter-spacing: 4px;
-  color: #8888aa;
-  text-transform: uppercase;
-  margin-top: 6px;
+.logoImg {
+  width: 200px;
+  max-width: 60vw;
+  mix-blend-mode: screen;
+  filter: brightness(1.1);
+  display: block;
+  margin: 0 auto;
 }
 
 .standupBadge {

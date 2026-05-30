@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import styles from './page.module.css'
 
 export default function Home() {
@@ -22,10 +23,14 @@ export default function Home() {
 
         {/* Logo */}
         <div className={styles.logoWrap}>
-          <div className={styles.logoText}>Ben Akiba</div>
-          <div className={styles.logoSub}>
-            Comedy Club &amp; Bar<br />White Lounge &amp; Art Gallery
-          </div>
+          <Image
+            src="/logo.png"
+            alt="Ben Akiba"
+            width={280}
+            height={120}
+            className={styles.logoImg}
+            priority
+          />
         </div>
 
         {/* Divider */}
