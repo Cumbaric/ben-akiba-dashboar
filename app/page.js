@@ -1,30 +1,26 @@
-import { supabase } from '@/lib/supabase'
+import Link from 'next/link'
 import styles from './page.module.css'
 
-const DAY_NAMES = ['NED', 'PON', 'UTO', 'SRE', 'ČET', 'PET', 'SUB']
-const MONTH_NAMES = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
-
-function formatDate(dateStr) {
-  const d = new Date(dateStr)
-  return {
-    day: DAY_NAMES[d.getDay()],
-    date: `${String(d.getDate()).padStart(2, '0')}.${MONTH_NAMES[d.getMonth()]}.`,
-  }
-}
-
-export const dynamic = 'force-dynamic'
-
-export default async function Home() {
-  const { data: events } = await supabase
-    .from('events')
-    .select('*')
-    .order('date', { ascending: true })
-
+export default function Home() {
   return (
     <div className={styles.page}>
 
-      {/* ── HEADER ── */}
-      <header className={styles.header}>
+      {/* ── BACKGROUND LIGHTS ── */}
+      <div className={styles.bg}>
+        <div className={styles.bgLight} />
+        <div className={styles.bgLight} />
+        <div className={styles.bgLight} />
+        <div className={styles.bgLight} />
+        <div className={styles.bgLight} />
+        <div className={styles.bgLight} />
+        <div className={styles.bgGlow} />
+        <div className={styles.bgGlow} />
+      </div>
+
+      {/* ── CONTENT ── */}
+      <div className={styles.content}>
+
+        {/* Logo */}
         <div className={styles.logoWrap}>
           <div className={styles.logoText}>Ben Akiba</div>
           <div className={styles.logoSub}>
@@ -32,84 +28,43 @@ export default async function Home() {
           </div>
         </div>
 
-        <div className={styles.standupBadge}>
-          <div className={styles.standupRow}>
-            <div className={styles.standupIcon}>🎤</div>
-            <div className={styles.standupTitle}>Stand Up</div>
-          </div>
-          <div className={styles.standupSub}>Repertoar</div>
-        </div>
-      </header>
-
-      {/* ── TABLE ── */}
-      <main className={styles.container}>
-        <div className={styles.tableWrapper}>
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th>📅 Datum</th>
-                <th>🕐 Vreme</th>
-                <th>🎭 Predstava</th>
-                <th>👤 Izvođač</th>
-                <th>🎟 Cena</th>
-              </tr>
-            </thead>
-            <tbody>
-              {!events || events.length === 0 ? (
-                <tr>
-                  <td colSpan={5} className={styles.emptyState}>
-                    Nema zakazanih događaja.
-                  </td>
-                </tr>
-              ) : (
-                events.map((event) => {
-                  const { day, date } = formatDate(event.date)
-                  return (
-                    <tr
-                      key={event.id}
-                      className={event.status === 'cancelled' ? styles.cancelled : ''}
-                    >
-                      <td>
-                        <div className={styles.dateCell}>
-                          <span className={styles.dayName}>{day}</span>
-                          <span className={styles.dateNum}>{date}</span>
-                        </div>
-                      </td>
-                      <td className={styles.timeCell}>{event.time}</td>
-                      <td>
-                        <div className={styles.showCell}>
-                          <span className={styles.showName}>{event.title}</span>
-                          {event.status === 'cancelled' && (
-                            <span className={styles.cancelBadge}>Otkazano</span>
-                          )}
-                        </div>
-                      </td>
-                      <td className={styles.performerCell}>{event.performer}</td>
-                      <td className={styles.priceCell}>
-                        <span className={styles.priceBadge}>
-                          {Number(event.price).toLocaleString('sr-RS')} RSD
-                        </span>
-                      </td>
-                    </tr>
-                  )
-                })
-              )}
-            </tbody>
-          </table>
+        {/* Divider */}
+        <div className={styles.divider}>
+          <div className={styles.dividerLine} />
+          <div className={styles.dividerText}>Izaberi događaj</div>
+          <div className={styles.dividerLine} />
         </div>
 
-        {/* ── CTA ── */}
-        <div className={styles.cta}>
-          <button className={styles.ctaBtn}>
-            📅 Pregledaj ceo repertoar
-          </button>
-        </div>
+        {/* Cards */}
+        <div className={styles.cards}>
 
-        {/* ── FOOTER ── */}
-        <div className={styles.footerNote}>
-          Ben Akiba &nbsp;·&nbsp; Belgrade &nbsp;·&nbsp; Good Vibes Only
+          {/* Stand Up */}
+          <Link href="/standup" className={`${styles.card} ${styles.cardStandup}`}>
+            <div className={`${styles.cardIcon} ${styles.cardIconStandup}`}>🎤</div>
+            <div className={styles.cardTitle}>Stand Up</div>
+            <div className={`${styles.cardSub} ${styles.cardSubStandup}`}>
+              Pogledaj<br />repertoar
+            </div>
+            <div className={`${styles.cardArrow} ${styles.cardArrowStandup}`}>→</div>
+          </Link>
+
+          {/* Žurka */}
+          <Link href="/zurke" className={`${styles.card} ${styles.cardZurka}`}>
+            <div className={`${styles.cardIcon} ${styles.cardIconZurka}`}>🪩</div>
+            <div className={styles.cardTitle}>Žurka</div>
+            <div className={`${styles.cardSub} ${styles.cardSubZurka}`}>
+              Pogledaj<br />repertoar
+            </div>
+            <div className={`${styles.cardArrow} ${styles.cardArrowZurka}`}>→</div>
+          </Link>
+
         </div>
-      </main>
+      </div>
+
+      {/* ── FOOTER ── */}
+      <div className={styles.footer}>
+        Ben Akiba &nbsp;·&nbsp; Belgrade &nbsp;·&nbsp; Good Vibes Only
+      </div>
 
     </div>
   )
