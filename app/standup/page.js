@@ -20,8 +20,8 @@ export default async function StandupPage() {
         <Link href="/" className={styles.backBtn}>← Nazad</Link>
 
         <div className={styles.logoWrap}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo.png" alt="Ben Akiba" className={styles.logoImg} />
+          <div className={styles.logoText}>Ben Akiba</div>
+          <div className={styles.logoSub}>Comedy Club &amp; Bar · White Lounge &amp; Art Gallery</div>
         </div>
 
         <div className={styles.standupBadge}>

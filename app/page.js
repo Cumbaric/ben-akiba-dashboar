@@ -22,8 +22,10 @@ export default function Home() {
 
         {/* Logo */}
         <div className={styles.logoWrap}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo.png" alt="Ben Akiba" className={styles.logoImg} />
+          <div className={styles.logoText}>Ben Akiba</div>
+          <div className={styles.logoSub}>
+            Comedy Club &amp; Bar<br />White Lounge &amp; Art Gallery
+          </div>
         </div>
 
         {/* Divider */}
