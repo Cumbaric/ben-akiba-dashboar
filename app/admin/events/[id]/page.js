@@ -2,6 +2,7 @@ import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import StandupTables from './StandupTables'
 import ZurkaTables from './ZurkaTables'
+import DownloadPDF from './DownloadPDF'
 import styles from '../../admin.module.css'
 
 const DAY_NAMES = ['NED', 'PON', 'UTO', 'SRE', 'ČET', 'PET', 'SUB']
@@ -35,7 +36,8 @@ export default async function EventDetailPage({ params }) {
             {day} {date}.{month}.{year} &nbsp;·&nbsp; {event.time} &nbsp;·&nbsp; {event.performer}
           </p>
         </div>
-        <div style={{ display: 'flex', gap: 10 }}>
+        <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+          <DownloadPDF event={event} reservations={reservations || []} />
           <Link href={`/admin/events/edit?id=${event.id}`} className={styles.editBtn} style={{ padding: '10px 18px' }}>
             ✏️ Uredi događaj
           </Link>
