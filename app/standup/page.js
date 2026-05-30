@@ -1,6 +1,5 @@
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
-import Image from 'next/image'
 import styles from './standup.module.css'
 
 const DAY_NAMES = ['NED', 'PON', 'UTO', 'SRE', 'ČET', 'PET', 'SUB']
@@ -21,7 +20,8 @@ export default async function StandupPage() {
         <Link href="/" className={styles.backBtn}>← Nazad</Link>
 
         <div className={styles.logoWrap}>
-          <Image src="/logo.png" alt="Ben Akiba" width={200} height={86} className={styles.logoImg} priority />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo.png" alt="Ben Akiba" className={styles.logoImg} />
         </div>
 
         <div className={styles.standupBadge}>

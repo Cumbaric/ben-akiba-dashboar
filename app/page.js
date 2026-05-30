@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import styles from './page.module.css'
 
 export default function Home() {
@@ -23,14 +22,8 @@ export default function Home() {
 
         {/* Logo */}
         <div className={styles.logoWrap}>
-          <Image
-            src="/logo.png"
-            alt="Ben Akiba"
-            width={280}
-            height={120}
-            className={styles.logoImg}
-            priority
-          />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo.png" alt="Ben Akiba" className={styles.logoImg} />
         </div>
 
         {/* Divider */}

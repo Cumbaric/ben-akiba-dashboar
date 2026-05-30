@@ -25,13 +25,17 @@
 
 .backBtn:hover { color: #e91e8c; }
 
+.logoWrap {
+  background: #0d0d1a;
+  display: flex;
+  justify-content: center;
+}
+
 .logoImg {
-  width: 200px;
-  max-width: 60vw;
+  width: 220px;
+  max-width: 65vw;
   mix-blend-mode: screen;
-  filter: brightness(1.1);
   display: block;
-  margin: 0 auto;
 }
 
 .standupBadge {

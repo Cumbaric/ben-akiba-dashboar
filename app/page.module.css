@@ -141,13 +141,18 @@
   margin-bottom: 8px;
 }
 
+.logoWrap {
+  background: #050508;
+  display: flex;
+  justify-content: center;
+  padding: 0 10px;
+}
+
 .logoImg {
-  width: 280px;
+  width: 300px;
   max-width: 80vw;
   mix-blend-mode: screen;
-  filter: brightness(1.1);
   display: block;
-  margin: 0 auto;
 }
 
 /* ── DIVIDER ─────────────────────────────────── */
