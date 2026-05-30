@@ -19,6 +19,7 @@ const EMPTY = {
   note: '',
   status: 'active',
   event_type: 'standup',
+  floor: 'all',
 }
 
 export default function EventForm({ event }) {
@@ -81,6 +82,22 @@ export default function EventForm({ event }) {
               <option value="zurka">🎉 Žurka</option>
             </select>
           </div>
+
+          {form.event_type === 'zurka' && (
+            <div className={styles.field}>
+              <label className={styles.label}>Sprat / Sala</label>
+              <select
+                className={styles.select}
+                value={form.floor}
+                onChange={e => set('floor', e.target.value)}
+              >
+                <option value="all">Sve sale</option>
+                <option value="ground_floor">Ground Floor (dole)</option>
+                <option value="white_lounge">White Lounge (gore)</option>
+                <option value="after">After</option>
+              </select>
+            </div>
+          )}
 
           <div className={`${styles.field} ${styles.fullWidth}`}>
             <label className={styles.label}>Naziv predstave *</label>

@@ -137,6 +137,48 @@
 .priceBadge { display: inline-block; padding: 5px 14px; border-radius: 8px; background: rgba(0,229,255,0.06); border: 1px solid rgba(0,229,255,0.2); color: #00e5ff; font-size: 13px; font-weight: 700; white-space: nowrap; }
 .emptyState { text-align: center; padding: 60px 24px; color: #334455; font-size: 14px; }
 
+.floorBadge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 6px;
+  background: rgba(0,229,255,0.08);
+  border: 1px solid rgba(0,229,255,0.2);
+  color: #00e5ff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.resCell { text-align: center; }
+
+.resBadge {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 6px;
+  background: rgba(0,229,255,0.06);
+  border: 1px solid rgba(0,229,255,0.15);
+  color: #00e5ff;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.mobileFloor {
+  font-size: 11px;
+  font-weight: 700;
+  color: #00e5ff;
+  letter-spacing: 0.5px;
+  margin-top: 3px;
+}
+
+.mobileResWrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #888aaa;
+}
+
 .footerNote {
   margin-top: 48px;
   text-align: center;
@@ -221,8 +263,9 @@
 }
 
 .mobileTime {
-  font-size: 13px;
+  font-size: 11px;
   color: #888aaa;
+  margin-top: 3px;
 }
 
 @media (max-width: 640px) {
