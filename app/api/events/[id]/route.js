@@ -20,9 +20,11 @@ export async function PUT(request, { params }) {
 
 export async function DELETE(request, { params }) {
   const isAdmin = await getSession()
+  console.log('[DELETE] isAdmin:', isAdmin, '| id:', params.id)
   if (!isAdmin) return NextResponse.json({ error: 'Neovlašćen pristup' }, { status: 401 })
 
-  const { error } = await supabase.from('events').delete().eq('id', params.id)
+  const { data, error } = await supabase.from('events').delete().eq('id', params.id).select()
+  console.log('[DELETE] data:', data, '| error:', error)
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
   return NextResponse.json({ ok: true })
