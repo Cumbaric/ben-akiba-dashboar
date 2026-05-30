@@ -2,14 +2,13 @@ import { supabase } from '@/lib/supabase'
 import styles from './page.module.css'
 
 const DAY_NAMES = ['NED', 'PON', 'UTO', 'SRE', 'ČET', 'PET', 'SUB']
-const MONTH_NAMES = ['JAN', 'FEB', 'MAR', 'APR', 'MAJ', 'JUN', 'JUL', 'AVG', 'SEP', 'OKT', 'NOV', 'DEC']
+const MONTH_NAMES = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
 
 function formatDate(dateStr) {
   const d = new Date(dateStr)
   return {
     day: DAY_NAMES[d.getDay()],
-    date: String(d.getDate()).padStart(2, '0'),
-    month: MONTH_NAMES[d.getMonth()],
+    date: `${String(d.getDate()).padStart(2, '0')}.${MONTH_NAMES[d.getMonth()]}.`,
   }
 }
 
@@ -23,15 +22,26 @@ export default async function Home() {
 
   return (
     <div className={styles.page}>
+
+      {/* ── HEADER ── */}
       <header className={styles.header}>
-        <div className={styles.logo}>Ben Akiba</div>
-        <div className={styles.subtitle}>Comedy Club &amp; Bar &nbsp;·&nbsp; White Lounge &amp; Art Gallery</div>
+        <div className={styles.logoWrap}>
+          <div className={styles.logoText}>Ben Akiba</div>
+          <div className={styles.logoSub}>
+            Comedy Club &amp; Bar<br />White Lounge &amp; Art Gallery
+          </div>
+        </div>
+
         <div className={styles.standupBadge}>
-          <div className={styles.standupTitle}>🎤 Stand Up</div>
+          <div className={styles.standupRow}>
+            <div className={styles.standupIcon}>🎤</div>
+            <div className={styles.standupTitle}>Stand Up</div>
+          </div>
           <div className={styles.standupSub}>Repertoar</div>
         </div>
       </header>
 
+      {/* ── TABLE ── */}
       <main className={styles.container}>
         <div className={styles.tableWrapper}>
           <table className={styles.table}>
@@ -53,12 +63,17 @@ export default async function Home() {
                 </tr>
               ) : (
                 events.map((event) => {
-                  const { day, date, month } = formatDate(event.date)
+                  const { day, date } = formatDate(event.date)
                   return (
-                    <tr key={event.id} className={event.status === 'cancelled' ? styles.cancelled : ''}>
-                      <td className={styles.dateCell}>
-                        <div className={styles.dayName}>{day}</div>
-                        <div className={styles.dateNum}>{date}.{month}.</div>
+                    <tr
+                      key={event.id}
+                      className={event.status === 'cancelled' ? styles.cancelled : ''}
+                    >
+                      <td>
+                        <div className={styles.dateCell}>
+                          <span className={styles.dayName}>{day}</span>
+                          <span className={styles.dateNum}>{date}</span>
+                        </div>
                       </td>
                       <td className={styles.timeCell}>{event.time}</td>
                       <td>
@@ -83,14 +98,19 @@ export default async function Home() {
           </table>
         </div>
 
+        {/* ── CTA ── */}
         <div className={styles.cta}>
-          <button className={styles.ctaBtn}>📅 Pregledaj ceo repertoar</button>
+          <button className={styles.ctaBtn}>
+            📅 Pregledaj ceo repertoar
+          </button>
         </div>
 
+        {/* ── FOOTER ── */}
         <div className={styles.footerNote}>
           Ben Akiba &nbsp;·&nbsp; Belgrade &nbsp;·&nbsp; Good Vibes Only
         </div>
       </main>
+
     </div>
   )
 }
