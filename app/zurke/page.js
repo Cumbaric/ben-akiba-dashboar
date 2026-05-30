@@ -129,29 +129,41 @@ export default async function ZurkePage() {
               const resCount = reservationCounts[event.id] || 0
               return (
                 <div key={event.id} className={`${styles.mobileCard} ${event.status === 'cancelled' ? styles.cancelled : ''}`}>
-                  <div className={styles.mobileCardTop}>
-                    <div className={styles.mobileDate}>
-                      <span className={styles.mobileDayName}>{day}</span>
-                      <span className={styles.mobileDateNum}>{date}</span>
-                      <span className={styles.mobileTime}>{event.time}</span>
-                    </div>
-                    <div className={styles.mobileInfo}>
-                      <div className={styles.mobileTitle}>
-                        {event.title}
-                        {event.status === 'cancelled' && (
-                          <span className={styles.cancelBadge} style={{ marginLeft: 8 }}>Otkazano</span>
-                        )}
-                      </div>
-                      {floorLabel && <div className={styles.mobileFloor}>{floorLabel}</div>}
-                      <div className={styles.mobilePerformer}>{event.performer}</div>
-                    </div>
+
+                  {/* Datum + vreme */}
+                  <div className={styles.mobileRow1}>
+                    <span className={styles.mobileDayName}>{day}</span>
+                    <span className={styles.mobileDateNum}>{date}</span>
+                    <span className={styles.mobileSep}>·</span>
+                    <span className={styles.mobileTime}>🕐 {event.time}</span>
                   </div>
+
+                  {/* Naziv */}
+                  <div className={styles.mobileTitle}>
+                    {event.title}
+                    {event.status === 'cancelled' && (
+                      <span className={styles.cancelBadge}>Otkazano</span>
+                    )}
+                  </div>
+
+                  {/* Sprat */}
+                  {floorLabel && (
+                    <div className={styles.mobileFloorRow}>
+                      <span className={styles.floorBadge}>{floorLabel}</span>
+                    </div>
+                  )}
+
+                  {/* Izvođač */}
+                  <div className={styles.mobilePerformer}>👤 {event.performer}</div>
+
+                  {/* Rezervacije + cena */}
                   <div className={styles.mobileCardBottom}>
                     <span className={styles.mobileResWrap}>
-                      👥 <span className={styles.resBadge}>{resCount}</span>
+                      👥 Rezervacije: <span className={styles.resBadge}>{resCount}</span>
                     </span>
                     <span className={styles.priceBadge}>{Number(event.price).toLocaleString('sr-RS')} RSD</span>
                   </div>
+
                 </div>
               )
             })
