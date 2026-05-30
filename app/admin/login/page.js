@@ -34,7 +34,7 @@ export default function LoginPage() {
   return (
     <div className={styles.page}>
       <div className={styles.card}>
-        <div className={styles.logo}>Ben Akiba</div>
+        <img src="/logo-transparent.png" alt="Ben Akiba" className={styles.logoImg} />
         <div className={styles.tagline}>Admin Panel</div>
 
         <form className={styles.form} onSubmit={handleSubmit}>

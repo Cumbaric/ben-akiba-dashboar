@@ -22,7 +22,7 @@ export default function Home() {
 
         {/* Logo */}
         <div className={styles.logoWrap}>
-          <div className={styles.logoText}>Ben Akiba</div>
+          <img src="/logo-transparent.png" alt="Ben Akiba" className={styles.logoImg} />
           <div className={styles.logoSub}>
             Comedy Club &amp; Bar<br />White Lounge &amp; Art Gallery
           </div>

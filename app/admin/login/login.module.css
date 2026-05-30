@@ -16,13 +16,12 @@
   padding: 40px 36px;
 }
 
-.logo {
-  font-size: 28px;
-  font-weight: 800;
-  font-style: italic;
-  text-align: center;
-  color: var(--text-primary);
-  letter-spacing: -1px;
+.logoImg {
+  display: block;
+  height: 48px;
+  width: auto;
+  max-width: 100%;
+  margin: 0 auto;
 }
 
 .tagline {

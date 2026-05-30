@@ -25,14 +25,12 @@
 
 .backBtn:hover { color: #e91e8c; }
 
-.logoText {
-  font-size: 56px;
-  font-weight: 400;
-  font-style: italic;
-  font-family: 'Pinyon Script', 'Great Vibes', 'Dancing Script', cursive;
-  color: #fff;
-  line-height: 1;
-  letter-spacing: -2px;
+.logoImg {
+  display: block;
+  height: 80px;
+  width: auto;
+  max-width: 100%;
+  margin: 0 auto;
 }
 
 .logoSub {
@@ -244,4 +242,5 @@
   .header { padding: 32px 16px 24px; }
   .container { padding: 0 10px; }
   .mobileCard { padding: 14px 12px; }
+  .logoImg { height: 56px; }
 }

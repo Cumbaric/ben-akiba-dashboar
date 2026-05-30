@@ -20,7 +20,7 @@ export default async function StandupPage() {
         <Link href="/" className={styles.backBtn}>← Nazad</Link>
 
         <div className={styles.logoWrap}>
-          <div className={styles.logoText}>Ben Akiba</div>
+          <img src="/logo-transparent.png" alt="Ben Akiba" className={styles.logoImg} />
           <div className={styles.logoSub}>Comedy Club &amp; Bar · White Lounge &amp; Art Gallery</div>
         </div>
 

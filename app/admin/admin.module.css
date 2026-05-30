@@ -40,6 +40,14 @@
 
 .navLogo a {
   color: inherit;
+  display: flex;
+  align-items: center;
+}
+
+.navLogoImg {
+  display: block;
+  height: 30px;
+  width: auto;
 }
 
 .navBadge {

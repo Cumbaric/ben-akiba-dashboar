@@ -141,15 +141,13 @@
   margin-bottom: 8px;
 }
 
-.logoText {
-  font-size: 86px;
-  font-weight: 400;
-  font-style: italic;
-  font-family: 'Pinyon Script', 'Great Vibes', 'Dancing Script', 'Brush Script MT', cursive;
-  color: #ffffff;
-  line-height: 1;
-  letter-spacing: -2px;
-  text-shadow: 0 0 60px rgba(255,255,255,0.15), 0 2px 4px rgba(0,0,0,0.5);
+.logoImg {
+  display: block;
+  height: 130px;
+  width: auto;
+  max-width: 100%;
+  margin: 0 auto;
+  filter: drop-shadow(0 0 60px rgba(255,255,255,0.15)) drop-shadow(0 2px 4px rgba(0,0,0,0.5));
 }
 
 .logoSub {
@@ -305,8 +303,8 @@
 
 /* ── RESPONSIVE ──────────────────────────────── */
 @media (max-width: 480px) {
-  .logoText {
-    font-size: 64px;
+  .logoImg {
+    height: 90px;
   }
 
   .cards {
