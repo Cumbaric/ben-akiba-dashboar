@@ -19,21 +19,22 @@ export default async function StandupPage() {
     .from('reservations')
     .select('event_id, section, num_people, confirmed')
 
-  // Agregacija: TC (tickets), TL (telefonom), PV (potvrđeni). UK = TC + TL
+  // Agregacija: TC (tickets), TL (telefonom), FR (free), PV (potvrđeni). UK = TC + TL + FR
   const stats = {}
   if (reservations) {
     reservations.forEach(r => {
-      if (!stats[r.event_id]) stats[r.event_id] = { tc: 0, tl: 0, pv: 0 }
+      if (!stats[r.event_id]) stats[r.event_id] = { tc: 0, tl: 0, fr: 0, pv: 0 }
       const n = r.num_people || 0
       if (r.section === 'tickets') stats[r.event_id].tc += n
       if (r.section === 'phone') stats[r.event_id].tl += n
+      if (r.section === 'free') stats[r.event_id].fr += n
       if (r.confirmed && r.section !== 'waitlist') stats[r.event_id].pv += n
     })
   }
 
   function getStats(id) {
-    const s = stats[id] || { tc: 0, tl: 0, pv: 0 }
-    return { ...s, uk: s.tc + s.tl }
+    const s = stats[id] || { tc: 0, tl: 0, fr: 0, pv: 0 }
+    return { ...s, uk: s.tc + s.tl + s.fr }
   }
 
   return (
@@ -66,7 +67,8 @@ export default async function StandupPage() {
                 <th>👤 Izvođač</th>
                 <th className={`${styles.statTh} ${styles.statTc}`} title="tickets.rs">TC</th>
                 <th className={`${styles.statTh} ${styles.statTl}`} title="Telefonom">TL</th>
-                <th className={`${styles.statTh} ${styles.statUk}`} title="Ukupno (tickets + telefonom)">UK</th>
+                <th className={`${styles.statTh} ${styles.statFr}`} title="Free karte">FR</th>
+                <th className={`${styles.statTh} ${styles.statUk}`} title="Ukupno (tickets + telefonom + free)">UK</th>
                 <th className={`${styles.statTh} ${styles.statPv}`} title="Potvrđeni">PV</th>
                 <th>🎟 Cena</th>
               </tr>
@@ -74,7 +76,7 @@ export default async function StandupPage() {
             <tbody>
               {!events || events.length === 0 ? (
                 <tr>
-                  <td colSpan={9} className={styles.emptyState}>
+                  <td colSpan={10} className={styles.emptyState}>
                     Nema zakazanih stand-up događaja.
                   </td>
                 </tr>
@@ -104,6 +106,7 @@ export default async function StandupPage() {
                       <td className={styles.performerCell}>{event.performer}</td>
                       <td className={`${styles.statTd} ${styles.statTc}`}>{s.tc}</td>
                       <td className={`${styles.statTd} ${styles.statTl}`}>{s.tl}</td>
+                      <td className={`${styles.statTd} ${styles.statFr}`}>{s.fr}</td>
                       <td className={`${styles.statTd} ${styles.statUk}`}>{s.uk}</td>
                       <td className={`${styles.statTd} ${styles.statPv}`}>{s.pv}</td>
                       <td className={styles.priceCell}>
@@ -150,6 +153,7 @@ export default async function StandupPage() {
                   <div className={styles.mobileStats}>
                     <span className={`${styles.mobileStat} ${styles.statTc}`}><b>TC</b> {s.tc}</span>
                     <span className={`${styles.mobileStat} ${styles.statTl}`}><b>TL</b> {s.tl}</span>
+                    <span className={`${styles.mobileStat} ${styles.statFr}`}><b>FR</b> {s.fr}</span>
                     <span className={`${styles.mobileStat} ${styles.statUk}`}><b>UK</b> {s.uk}</span>
                     <span className={`${styles.mobileStat} ${styles.statPv}`}><b>PV</b> {s.pv}</span>
                   </div>

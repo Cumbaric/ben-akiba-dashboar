@@ -162,8 +162,9 @@
 /* Boje po koloni (header + ćelije) */
 .table thead th.statTc, .table tbody td.statTc { color: #e91e8c; }   /* tickets - pink */
 .table thead th.statTl, .table tbody td.statTl { color: #40c4ff; }   /* telefon - plava */
+.table thead th.statFr, .table tbody td.statFr { color: #00e676; }   /* free - zelena */
 .table thead th.statUk, .table tbody td.statUk { color: #b388ff; }   /* ukupno - ljubičasta */
-.table thead th.statPv, .table tbody td.statPv { color: #00e676; }   /* potvrđeni - zelena */
+.table thead th.statPv, .table tbody td.statPv { color: #ffd54f; }   /* potvrđeni - žuta */
 
 /* ── Mobilne statistike ── */
 .mobileStats {
@@ -194,12 +195,14 @@
 }
 .mobileStat.statTc, .mobileStat.statTc b { color: #e91e8c; }
 .mobileStat.statTl, .mobileStat.statTl b { color: #40c4ff; }
+.mobileStat.statFr, .mobileStat.statFr b { color: #00e676; }
 .mobileStat.statUk, .mobileStat.statUk b { color: #b388ff; }
-.mobileStat.statPv, .mobileStat.statPv b { color: #00e676; }
+.mobileStat.statPv, .mobileStat.statPv b { color: #ffd54f; }
 .mobileStat.statTc { border-color: rgba(233,30,140,0.35); background: rgba(233,30,140,0.06); }
 .mobileStat.statTl { border-color: rgba(64,196,255,0.35); background: rgba(64,196,255,0.06); }
+.mobileStat.statFr { border-color: rgba(0,230,118,0.35); background: rgba(0,230,118,0.06); }
 .mobileStat.statUk { border-color: rgba(179,136,255,0.35); background: rgba(179,136,255,0.06); }
-.mobileStat.statPv { border-color: rgba(0,230,118,0.35); background: rgba(0,230,118,0.06); }
+.mobileStat.statPv { border-color: rgba(255,213,79,0.35); background: rgba(255,213,79,0.06); }
 
 .footerNote {
   margin-top: 48px;
