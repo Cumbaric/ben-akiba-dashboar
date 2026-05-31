@@ -61,7 +61,6 @@ export default async function ZurkePage() {
                 <th>📅 Datum</th>
                 <th>🕐 Vreme</th>
                 <th>🏢 Sprat</th>
-                <th>🎉 Događaj</th>
                 <th>👤 Izvođač</th>
                 <th>👥 Rezervacije</th>
                 <th>🎟 Cena</th>
@@ -70,7 +69,7 @@ export default async function ZurkePage() {
             <tbody>
               {!events || events.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className={styles.emptyState}>Nema zakazanih žurki.</td>
+                  <td colSpan={6} className={styles.emptyState}>Nema zakazanih žurki.</td>
                 </tr>
               ) : (
                 events.map((event) => {
@@ -90,14 +89,9 @@ export default async function ZurkePage() {
                       <td className={styles.timeCell}>{event.time}</td>
                       <td>
                         {floorLabel && <span className={styles.floorBadge}>{floorLabel}</span>}
-                      </td>
-                      <td>
-                        <div className={styles.showCell}>
-                          <span className={styles.showName}>{event.title}</span>
-                          {event.status === 'cancelled' && (
-                            <span className={styles.cancelBadge}>Otkazano</span>
-                          )}
-                        </div>
+                        {event.status === 'cancelled' && (
+                          <span className={styles.cancelBadge}>Otkazano</span>
+                        )}
                       </td>
                       <td className={styles.performerCell}>{event.performer}</td>
                       <td className={styles.resCell}>
