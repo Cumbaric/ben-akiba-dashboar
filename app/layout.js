@@ -3,6 +3,15 @@ import '../styles/globals.css'
 export const metadata = {
   title: 'Ben Akiba | Upravljanje rezervacijama',
   description: 'Ben Akiba Comedy Club - Dashboard za upravljanje rezervacijama',
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+    googleBot: {
+      index: false,
+      follow: false,
+    },
+  },
 }
 
 export default function RootLayout({ children }) {
