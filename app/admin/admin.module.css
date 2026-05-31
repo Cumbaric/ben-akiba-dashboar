@@ -118,6 +118,37 @@
   margin-top: 2px;
 }
 
+/* Group sections (Stand Up / Žurke) */
+.groupSection {
+  margin-bottom: 40px;
+}
+
+.groupHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.groupTitle {
+  font-size: 20px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.groupHeader .statCard {
+  padding: 12px 20px;
+  min-width: 150px;
+}
+
+.groupHeader .statValue {
+  font-size: 26px;
+}
+
 /* Stats row */
 .statsRow {
   display: grid;
