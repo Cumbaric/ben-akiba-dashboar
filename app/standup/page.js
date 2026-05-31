@@ -64,10 +64,10 @@ export default async function StandupPage() {
                 <th>🕐 Vreme</th>
                 <th>🎭 Predstava</th>
                 <th>👤 Izvođač</th>
-                <th className={styles.statTh} title="tickets.rs">TC</th>
-                <th className={styles.statTh} title="Telefonom">TL</th>
-                <th className={styles.statTh} title="Ukupno (tickets + telefonom)">UK</th>
-                <th className={styles.statTh} title="Potvrđeni">PV</th>
+                <th className={`${styles.statTh} ${styles.statTc}`} title="tickets.rs">TC</th>
+                <th className={`${styles.statTh} ${styles.statTl}`} title="Telefonom">TL</th>
+                <th className={`${styles.statTh} ${styles.statUk}`} title="Ukupno (tickets + telefonom)">UK</th>
+                <th className={`${styles.statTh} ${styles.statPv}`} title="Potvrđeni">PV</th>
                 <th>🎟 Cena</th>
               </tr>
             </thead>
@@ -102,8 +102,8 @@ export default async function StandupPage() {
                         </div>
                       </td>
                       <td className={styles.performerCell}>{event.performer}</td>
-                      <td className={styles.statTd}>{s.tc}</td>
-                      <td className={styles.statTd}>{s.tl}</td>
+                      <td className={`${styles.statTd} ${styles.statTc}`}>{s.tc}</td>
+                      <td className={`${styles.statTd} ${styles.statTl}`}>{s.tl}</td>
                       <td className={`${styles.statTd} ${styles.statUk}`}>{s.uk}</td>
                       <td className={`${styles.statTd} ${styles.statPv}`}>{s.pv}</td>
                       <td className={styles.priceCell}>
@@ -148,8 +148,8 @@ export default async function StandupPage() {
                   </div>
 
                   <div className={styles.mobileStats}>
-                    <span className={styles.mobileStat}><b>TC</b> {s.tc}</span>
-                    <span className={styles.mobileStat}><b>TL</b> {s.tl}</span>
+                    <span className={`${styles.mobileStat} ${styles.statTc}`}><b>TC</b> {s.tc}</span>
+                    <span className={`${styles.mobileStat} ${styles.statTl}`}><b>TL</b> {s.tl}</span>
                     <span className={`${styles.mobileStat} ${styles.statUk}`}><b>UK</b> {s.uk}</span>
                     <span className={`${styles.mobileStat} ${styles.statPv}`}><b>PV</b> {s.pv}</span>
                   </div>
