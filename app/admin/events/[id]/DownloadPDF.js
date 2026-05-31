@@ -20,6 +20,32 @@ const ZURKA_SECTIONS = [
   { key: 'after', label: 'AFTER' },
 ]
 
+const FONT_NAME = 'DejaVuSans'
+
+// Učitaj TTF i konvertuj u base64 (za jsPDF VFS)
+async function loadFontBase64(url) {
+  const res = await fetch(url)
+  const buf = await res.arrayBuffer()
+  const bytes = new Uint8Array(buf)
+  let binary = ''
+  const chunk = 0x8000
+  for (let i = 0; i < bytes.length; i += chunk) {
+    binary += String.fromCharCode.apply(null, bytes.subarray(i, i + chunk))
+  }
+  return btoa(binary)
+}
+
+let _fontCache = null
+async function getFonts() {
+  if (_fontCache) return _fontCache
+  const [regular, bold] = await Promise.all([
+    loadFontBase64('/fonts/DejaVuSans.ttf'),
+    loadFontBase64('/fonts/DejaVuSans-Bold.ttf'),
+  ])
+  _fontCache = { regular, bold }
+  return _fontCache
+}
+
 export default function DownloadPDF({ event, reservations }) {
   const [loading, setLoading] = useState(false)
 
@@ -31,29 +57,38 @@ export default function DownloadPDF({ event, reservations }) {
 
       const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
 
+      // Ugradi font sa podrškom za srpska slova (č, ć, š, ž, đ)
+      const fonts = await getFonts()
+      doc.addFileToVFS('DejaVuSans.ttf', fonts.regular)
+      doc.addFont('DejaVuSans.ttf', FONT_NAME, 'normal')
+      doc.addFileToVFS('DejaVuSans-Bold.ttf', fonts.bold)
+      doc.addFont('DejaVuSans-Bold.ttf', FONT_NAME, 'bold')
+      doc.addFont('DejaVuSans.ttf', FONT_NAME, 'italic') // mapiraj italic na regular (nema oblique varijantu)
+      doc.setFont(FONT_NAME, 'normal')
+
       const d = new Date(event.date)
       const dayShort = DAY_SHORT[d.getDay()]
       const dateStr = `${dayShort} ${String(d.getDate()).padStart(2, '0')}.${MONTH_NAMES[d.getMonth()]}.${d.getFullYear()}`
 
       // ---- Header ----
       doc.setFontSize(20)
-      doc.setFont('helvetica', 'bold')
+      doc.setFont(FONT_NAME, 'bold')
       doc.text('BEN AKIBA', 105, 18, { align: 'center' })
 
       doc.setFontSize(11)
-      doc.setFont('helvetica', 'normal')
+      doc.setFont(FONT_NAME, 'normal')
       doc.setTextColor(120, 120, 120)
       doc.text('Comedy Club & Bar', 105, 25, { align: 'center' })
 
       doc.setTextColor(0, 0, 0)
       doc.setFontSize(14)
-      doc.setFont('helvetica', 'bold')
+      doc.setFont(FONT_NAME, 'bold')
       doc.text(event.title, 105, 35, { align: 'center' })
 
       doc.setFontSize(10)
-      doc.setFont('helvetica', 'normal')
+      doc.setFont(FONT_NAME, 'normal')
       doc.setTextColor(80, 80, 80)
-      doc.text(`${event.performer}   ·   ${dateStr}   ·   ${event.time}   ·   ${Number(event.price).toLocaleString('sr-RS')} RSD`, 105, 42, { align: 'center' })
+      doc.text(`${event.performer}  ·  ${dateStr}  ·  ${event.time}  ·  ${Number(event.price).toLocaleString('sr-RS')} RSD`, 105, 42, { align: 'center', maxWidth: 182 })
 
       // divider line
       doc.setDrawColor(200, 200, 200)
@@ -94,6 +129,7 @@ export default function DownloadPDF({ event, reservations }) {
           head: [summaryData[0]],
           body: [summaryData[1]],
           theme: 'grid',
+          styles: { font: FONT_NAME },
           headStyles: { fillColor: [40, 40, 60], textColor: 255, fontSize: 7, halign: 'center', fontStyle: 'bold' },
           bodyStyles: { fontSize: 11, fontStyle: 'bold', halign: 'center' },
           margin: { left: 14, right: 14 },
@@ -110,14 +146,14 @@ export default function DownloadPDF({ event, reservations }) {
         if (yPos > 240) { doc.addPage(); yPos = 20 }
 
         doc.setFontSize(11)
-        doc.setFont('helvetica', 'bold')
+        doc.setFont(FONT_NAME, 'bold')
         doc.setTextColor(40, 40, 40)
         doc.text(`${section.label}   (${totalPeople} osoba)`, 14, yPos)
         yPos += 4
 
         if (rows.length === 0) {
           doc.setFontSize(9)
-          doc.setFont('helvetica', 'italic')
+          doc.setFont(FONT_NAME, 'italic')
           doc.setTextColor(150, 150, 150)
           doc.text('Nema rezervacija', 14, yPos + 5)
           yPos += 14
@@ -129,7 +165,7 @@ export default function DownloadPDF({ event, reservations }) {
         const tableBody = rows.map((r, i) => {
           running -= (r.num_people || 0)
           const confirmed = event.event_type === 'standup'
-            ? (r.confirmed ? '+' : '○')
+            ? (r.confirmed ? 'DA' : '-')
             : null
           const row = [
             String(i + 1),
@@ -151,20 +187,34 @@ export default function DownloadPDF({ event, reservations }) {
           head,
           body: tableBody,
           theme: 'striped',
+          styles: { font: FONT_NAME },
           headStyles: { fillColor: [60, 20, 80], textColor: 255, fontSize: 8, fontStyle: 'bold' },
           bodyStyles: { fontSize: 9 },
-          columnStyles: {
-            0: { cellWidth: 8, halign: 'center' },
-            3: { cellWidth: 18, halign: 'center' },
-            4: event.event_type === 'standup' ? { cellWidth: 20, halign: 'center' } : { cellWidth: 25, halign: 'center' },
-            5: event.event_type === 'standup' ? { cellWidth: 25, halign: 'center' } : undefined,
-          },
+          columnStyles: event.event_type === 'standup'
+            ? {
+                0: { cellWidth: 10, halign: 'center' },  // #
+                1: { cellWidth: 62 },                    // Ime i prezime
+                2: { cellWidth: 40 },                    // Telefon
+                3: { cellWidth: 20, halign: 'center' },  // Br. osoba
+                4: { cellWidth: 22, halign: 'center' },  // Potvrđeno
+                5: { cellWidth: 28, halign: 'center' },  // Slobodnih mesta
+              }
+            : {
+                0: { cellWidth: 10, halign: 'center' },  // #
+                1: { cellWidth: 78 },                    // Ime
+                2: { cellWidth: 46 },                    // Telefon
+                3: { cellWidth: 20, halign: 'center' },  // Br. osoba
+                4: { cellWidth: 28, halign: 'center' },  // Rezervacije
+              },
           margin: { left: 14, right: 14 },
+          tableWidth: 182,
           didParseCell: (data) => {
             if (event.event_type === 'standup' && data.column.index === 4 && data.section === 'body') {
-              if (data.cell.raw === '+') {
+              if (data.cell.raw === 'DA') {
                 data.cell.styles.textColor = [0, 180, 80]
                 data.cell.styles.fontStyle = 'bold'
+              } else {
+                data.cell.styles.textColor = [170, 170, 170]
               }
             }
             // Red cells for negative running total
