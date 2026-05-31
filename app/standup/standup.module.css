@@ -143,6 +143,57 @@
 .priceBadge { display: inline-block; padding: 5px 14px; border-radius: 8px; background: rgba(179,136,255,0.08); border: 1px solid rgba(179,136,255,0.25); color: #b388ff; font-size: 13px; font-weight: 700; white-space: nowrap; }
 .emptyState { text-align: center; padding: 60px 24px; color: #666688; font-size: 14px; }
 
+/* ── Stat kolone: TC / TL / UK / PV ── */
+.table thead th.statTh {
+  text-align: center;
+  padding: 14px 6px;
+  letter-spacing: 1px;
+  color: #8888aa;
+  min-width: 34px;
+}
+.table tbody td.statTd {
+  text-align: center;
+  padding: 18px 6px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #ccccdd;
+  font-variant-numeric: tabular-nums;
+}
+.statUk { color: #40c4ff; }
+.statPv { color: #00e676; }
+
+/* ── Mobilne statistike ── */
+.mobileStats {
+  display: flex;
+  gap: 8px;
+  margin: 10px 0;
+  flex-wrap: wrap;
+}
+.mobileStat {
+  flex: 1;
+  min-width: 52px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: #ccccdd;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid #1e1e35;
+  border-radius: 8px;
+  padding: 6px 4px;
+  font-variant-numeric: tabular-nums;
+}
+.mobileStat b {
+  display: block;
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: #8888aa;
+  margin-bottom: 2px;
+}
+.mobileStat.statUk b { color: #40c4ff; }
+.mobileStat.statPv b { color: #00e676; }
+.mobileStat.statUk { color: #40c4ff; }
+.mobileStat.statPv { color: #00e676; }
+
 .footerNote {
   margin-top: 48px;
   text-align: center;

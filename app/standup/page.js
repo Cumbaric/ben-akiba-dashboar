@@ -14,6 +14,28 @@ export default async function StandupPage() {
     .eq('event_type', 'standup')
     .order('date', { ascending: true })
 
+  // Dohvati rezervacije za statistiku po eventu
+  const { data: reservations } = await supabase
+    .from('reservations')
+    .select('event_id, section, num_people, confirmed')
+
+  // Agregacija: TC (tickets), TL (telefonom), PV (potvrđeni). UK = TC + TL
+  const stats = {}
+  if (reservations) {
+    reservations.forEach(r => {
+      if (!stats[r.event_id]) stats[r.event_id] = { tc: 0, tl: 0, pv: 0 }
+      const n = r.num_people || 0
+      if (r.section === 'tickets') stats[r.event_id].tc += n
+      if (r.section === 'phone') stats[r.event_id].tl += n
+      if (r.confirmed && r.section !== 'waitlist') stats[r.event_id].pv += n
+    })
+  }
+
+  function getStats(id) {
+    const s = stats[id] || { tc: 0, tl: 0, pv: 0 }
+    return { ...s, uk: s.tc + s.tl }
+  }
+
   return (
     <div className={styles.page}>
       <header className={styles.header}>
@@ -42,13 +64,17 @@ export default async function StandupPage() {
                 <th>🕐 Vreme</th>
                 <th>🎭 Predstava</th>
                 <th>👤 Izvođač</th>
+                <th className={styles.statTh} title="tickets.rs">TC</th>
+                <th className={styles.statTh} title="Telefonom">TL</th>
+                <th className={styles.statTh} title="Ukupno (tickets + telefonom)">UK</th>
+                <th className={styles.statTh} title="Potvrđeni">PV</th>
                 <th>🎟 Cena</th>
               </tr>
             </thead>
             <tbody>
               {!events || events.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className={styles.emptyState}>
+                  <td colSpan={9} className={styles.emptyState}>
                     Nema zakazanih stand-up događaja.
                   </td>
                 </tr>
@@ -57,6 +83,7 @@ export default async function StandupPage() {
                   const d = new Date(event.date)
                   const day = DAY_NAMES[d.getDay()]
                   const date = `${String(d.getDate()).padStart(2,'0')}.${MONTH_NAMES[d.getMonth()]}.`
+                  const s = getStats(event.id)
                   return (
                     <tr key={event.id} className={event.status === 'cancelled' ? styles.cancelled : ''}>
                       <td>
@@ -75,6 +102,10 @@ export default async function StandupPage() {
                         </div>
                       </td>
                       <td className={styles.performerCell}>{event.performer}</td>
+                      <td className={styles.statTd}>{s.tc}</td>
+                      <td className={styles.statTd}>{s.tl}</td>
+                      <td className={`${styles.statTd} ${styles.statUk}`}>{s.uk}</td>
+                      <td className={`${styles.statTd} ${styles.statPv}`}>{s.pv}</td>
                       <td className={styles.priceCell}>
                         <span className={styles.priceBadge}>
                           {Number(event.price).toLocaleString('sr-RS')} RSD
@@ -97,6 +128,7 @@ export default async function StandupPage() {
               const d = new Date(event.date)
               const day = DAY_NAMES[d.getDay()]
               const date = `${String(d.getDate()).padStart(2,'0')}.${MONTH_NAMES[d.getMonth()]}.`
+              const s = getStats(event.id)
               return (
                 <div key={event.id} className={`${styles.mobileCard} ${event.status === 'cancelled' ? styles.cancelled : ''}`}>
                   <div className={styles.mobileCardTop}>
@@ -114,6 +146,14 @@ export default async function StandupPage() {
                       <div className={styles.mobilePerformer}>{event.performer}</div>
                     </div>
                   </div>
+
+                  <div className={styles.mobileStats}>
+                    <span className={styles.mobileStat}><b>TC</b> {s.tc}</span>
+                    <span className={styles.mobileStat}><b>TL</b> {s.tl}</span>
+                    <span className={`${styles.mobileStat} ${styles.statUk}`}><b>UK</b> {s.uk}</span>
+                    <span className={`${styles.mobileStat} ${styles.statPv}`}><b>PV</b> {s.pv}</span>
+                  </div>
+
                   <div className={styles.mobileCardBottom}>
                     <span className={styles.mobileTime}>🕐 {event.time}</span>
                     <span className={styles.priceBadge}>{Number(event.price).toLocaleString('sr-RS')} RSD</span>
