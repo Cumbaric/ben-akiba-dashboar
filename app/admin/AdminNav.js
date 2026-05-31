@@ -25,8 +25,11 @@ export default function AdminNav() {
         <Link href="/" className={styles.navLink} target="_blank">
           👁 Javni sajt
         </Link>
-        <Link href="/admin" className={styles.navLink}>
-          📅 Događaji
+        <Link href="/admin/standup" className={styles.navLink}>
+          🎤 Stand Up
+        </Link>
+        <Link href="/admin/zurke" className={styles.navLink}>
+          🎉 Žurke
         </Link>
         <Link href="/admin/events/new" className={styles.navLink}>
           ➕ Novi događaj
