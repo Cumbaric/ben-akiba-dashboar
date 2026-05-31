@@ -11,7 +11,6 @@ const STANDUP_SECTIONS = [
   { key: 'tickets', label: 'tickets.rs' },
   { key: 'phone', label: 'Telefonom' },
   { key: 'free', label: 'Free' },
-  { key: 'waitlist', label: 'Lista čekanja' },
 ]
 
 const ZURKA_SECTIONS = [
@@ -102,23 +101,20 @@ export default function DownloadPDF({ event, reservations }) {
         const tickets = reservations.filter(r => r.section === 'tickets')
         const phone = reservations.filter(r => r.section === 'phone')
         const free = reservations.filter(r => r.section === 'free')
-        const waitlist = reservations.filter(r => r.section === 'waitlist')
         const totalAll = [...tickets, ...phone, ...free].reduce((s, r) => s + (r.num_people || 0), 0)
         const totalConfirmed = [...tickets, ...phone, ...free].filter(r => r.confirmed).reduce((s, r) => s + (r.num_people || 0), 0)
-        const totalWaitlist = waitlist.reduce((s, r) => s + (r.num_people || 0), 0)
 
         doc.setFontSize(9)
         doc.setTextColor(0, 0, 0)
 
         const summaryData = [
-          ['SVE REZERVACIJE', 'TICKETS.RS', 'TELEFONOM', 'FREE', 'POTVRĐENO', 'LISTA ČEKANJA', 'KAPACITET', 'SLOBODNIH'],
+          ['SVE REZERVACIJE', 'TICKETS.RS', 'TELEFONOM', 'FREE', 'POTVRĐENO', 'KAPACITET', 'SLOBODNIH'],
           [
             String(totalAll),
             String(tickets.reduce((s, r) => s + (r.num_people || 0), 0)),
             String(phone.reduce((s, r) => s + (r.num_people || 0), 0)),
             String(free.reduce((s, r) => s + (r.num_people || 0), 0)),
             String(totalConfirmed),
-            String(totalWaitlist),
             String(event.capacity),
             String(event.capacity - totalAll),
           ]
@@ -229,6 +225,26 @@ export default function DownloadPDF({ event, reservations }) {
 
         yPos = doc.lastAutoTable.finalY + 10
       }
+
+      // ---- Napomene ----
+      if (yPos > 250) { doc.addPage(); yPos = 20 }
+      doc.setFontSize(11)
+      doc.setFont(FONT_NAME, 'bold')
+      doc.setTextColor(40, 40, 40)
+      doc.text('Napomene', 14, yPos)
+      yPos += 6
+
+      doc.setFontSize(10)
+      doc.setFont(FONT_NAME, 'normal')
+      const noteText = (event.note && event.note.trim()) ? event.note.trim() : '—'
+      doc.setTextColor(noteText === '—' ? 150 : 60, noteText === '—' ? 150 : 60, noteText === '—' ? 150 : 60)
+      const noteLines = doc.splitTextToSize(noteText, 182)
+      doc.text(noteLines, 14, yPos)
+      // okvir oko napomene
+      const noteHeight = noteLines.length * 5 + 6
+      doc.setDrawColor(210, 210, 210)
+      doc.rect(12, yPos - 5, 184, noteHeight)
+      yPos += noteHeight
 
       // ---- Footer ----
       const pageCount = doc.internal.getNumberOfPages()
