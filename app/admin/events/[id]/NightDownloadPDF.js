@@ -80,13 +80,6 @@ export default function NightDownloadPDF({ events, reservations }) {
 
       let yPos = 48
 
-      const grandTotal = reservations.reduce((s, r) => s + (r.num_people || 0), 0)
-      doc.setFontSize(10)
-      doc.setFont(FONT_NAME, 'bold')
-      doc.setTextColor(60, 60, 60)
-      doc.text(`Ukupno gostiju (cela večer): ${grandTotal}`, 14, yPos)
-      yPos += 8
-
       // Po jedan blok za svaki sprat
       for (const ev of sorted) {
         const rows = reservations.filter(r => r.event_id === ev.id)
