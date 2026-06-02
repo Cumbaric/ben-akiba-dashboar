@@ -93,7 +93,11 @@ export default function DownloadPDF({ event, reservations }) {
       doc.setDrawColor(200, 200, 200)
       doc.line(14, 46, 196, 46)
 
-      const sections = event.event_type === 'standup' ? STANDUP_SECTIONS : ZURKA_SECTIONS
+      let sections = event.event_type === 'standup' ? STANDUP_SECTIONS : ZURKA_SECTIONS
+      // Žurka vezana za jedan sprat → samo taj sprat u PDF-u
+      if (event.event_type === 'zurka' && event.floor && event.floor !== 'all') {
+        sections = sections.filter(s => s.key === event.floor)
+      }
       let yPos = 52
 
       // ---- Summary row for standup ----

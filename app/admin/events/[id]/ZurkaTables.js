@@ -167,11 +167,16 @@ export default function ZurkaTables({ event, reservations }) {
   const router = useRouter()
   function refresh() { router.refresh() }
 
+  // Ako je žurka vezana za jedan sprat, prikaži samo taj sprat
+  const visibleSections = (event.floor && event.floor !== 'all')
+    ? SECTIONS.filter(s => s.key === event.floor)
+    : SECTIONS
+
   return (
     <div>
       <div className={styles.summaryCard}>
         <div className={styles.summaryGrid}>
-          {SECTIONS.map(s => {
+          {visibleSections.map(s => {
             const rows = reservations.filter(r => r.section === s.key)
             const total = rows.reduce((sum, r) => sum + (r.num_people || 0), 0)
             return (
@@ -184,14 +189,16 @@ export default function ZurkaTables({ event, reservations }) {
           <div className={styles.summaryItem}>
             <div className={styles.summaryLabel}>Ukupno</div>
             <div className={styles.summaryValue} style={{ color: 'var(--pink)' }}>
-              {reservations.reduce((s, r) => s + (r.num_people || 0), 0)}
+              {reservations
+                .filter(r => visibleSections.some(s => s.key === r.section))
+                .reduce((s, r) => s + (r.num_people || 0), 0)}
             </div>
           </div>
         </div>
       </div>
 
       <div className={styles.zurkaGrid}>
-        {SECTIONS.map(section => (
+        {visibleSections.map(section => (
           <ZurkaSection
             key={section.key}
             section={section}
