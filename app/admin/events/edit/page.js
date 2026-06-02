@@ -12,7 +12,7 @@ export default async function EditEventPage({ searchParams }) {
 
   return (
     <div>
-      <div className={styles.pageHeader}>
+      <div className={styles.pageHeader} style={{ justifyContent: 'center', textAlign: 'center' }}>
         <div>
           <h1 className={styles.pageTitle}>Uredi događaj</h1>
           <p className={styles.pageSubtitle}>{event.title}</p>
