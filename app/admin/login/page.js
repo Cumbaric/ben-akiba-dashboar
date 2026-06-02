@@ -22,7 +22,7 @@ export default function LoginPage() {
     })
 
     if (res.ok) {
-      router.push('/admin')
+      router.push('/admin/standup')
       router.refresh()
     } else {
       const data = await res.json()

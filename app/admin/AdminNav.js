@@ -16,7 +16,7 @@ export default function AdminNav() {
   return (
     <nav className={styles.nav}>
       <div className={styles.navLogo}>
-        <Link href="/admin">
+        <Link href="/admin/standup">
           <img src="/logo-transparent.png" alt="Ben Akiba" className={styles.navLogoImg} />
         </Link>
         <span className={styles.navBadge}>Admin</span>

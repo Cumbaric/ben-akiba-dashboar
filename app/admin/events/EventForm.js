@@ -53,7 +53,7 @@ export default function EventForm({ event }) {
     })
 
     if (res.ok) {
-      router.push('/admin')
+      router.push('/admin/standup')
       router.refresh()
     } else {
       const data = await res.json()
@@ -264,7 +264,7 @@ export default function EventForm({ event }) {
             <button
               className={styles.btnSecondary}
               type="button"
-              onClick={() => router.push('/admin')}
+              onClick={() => router.push('/admin/standup')}
             >
               Otkaži
             </button>
