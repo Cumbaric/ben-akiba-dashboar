@@ -2,6 +2,7 @@ import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import AdminTabs from '../AdminTabs'
 import EventTable from '../EventTable'
+import ExportRepertoarImage from '../ExportRepertoarImage'
 import styles from '../admin.module.css'
 
 export const revalidate = 0
@@ -45,6 +46,15 @@ export default async function StandupAdmin() {
     }
   })
 
+  // Podaci za izvoz slike (TC/TL/FR/UK/PV)
+  const exportRows = baseRows.map(e => {
+    const s = stats[e.id] || { tickets: 0, phone: 0, free: 0, confirmed: 0 }
+    return {
+      date: e.date, time: e.time, title: e.title, performer: e.performer, price: e.price,
+      tc: s.tickets, tl: s.phone, fr: s.free, uk: s.tickets + s.phone + s.free, pv: s.confirmed,
+    }
+  })
+
   const activeCount = rows.filter(e => e.status === 'active').length
 
   return (
@@ -54,9 +64,12 @@ export default async function StandupAdmin() {
           <h1 className={styles.pageTitle}>🎤 Stand Up</h1>
           <p className={styles.pageSubtitle}>{rows.length} događaja</p>
         </div>
-        <Link href="/admin/events/new" className={styles.btnPrimary}>
-          ➕ Novi događaj
-        </Link>
+        <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+          <ExportRepertoarImage rows={exportRows} />
+          <Link href="/admin/events/new" className={styles.btnPrimary}>
+            ➕ Novi događaj
+          </Link>
+        </div>
       </div>
 
       <AdminTabs active="standup" />
