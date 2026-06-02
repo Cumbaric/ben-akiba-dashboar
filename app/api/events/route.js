@@ -17,7 +17,8 @@ export async function POST(request) {
   if (!isAdmin) return NextResponse.json({ error: 'Neovlašćen pristup' }, { status: 401 })
 
   const body = await request.json()
-  const { data, error } = await supabase.from('events').insert([body]).select().single()
+  const rows = Array.isArray(body) ? body : [body]
+  const { data, error } = await supabase.from('events').insert(rows).select()
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
   return NextResponse.json(data, { status: 201 })

@@ -118,6 +118,54 @@
   margin-top: 2px;
 }
 
+/* Žurka multi-sprat forma */
+.floorBlock {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 18px;
+  background: var(--bg-secondary);
+}
+
+.floorBlockHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.floorBlockTitle {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--purple);
+}
+
+.removeFloorBtn {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--red);
+  background: transparent;
+  border: 1px solid rgba(255, 82, 82, 0.3);
+  border-radius: var(--radius-sm);
+  padding: 5px 12px;
+  transition: background 0.15s;
+}
+.removeFloorBtn:hover { background: rgba(255, 82, 82, 0.1); }
+
+.addFloorBtn {
+  width: 100%;
+  padding: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--purple);
+  background: rgba(179, 136, 255, 0.08);
+  border: 1px dashed rgba(179, 136, 255, 0.5);
+  border-radius: var(--radius-sm);
+  transition: background 0.15s;
+}
+.addFloorBtn:hover { background: rgba(179, 136, 255, 0.16); }
+
 /* Floor tagovi po spratu (admin) */
 .floorTag {
   display: inline-block;
@@ -139,6 +187,14 @@
   background: var(--bg-secondary);
   padding: 10px 16px !important;
   border-top: 2px solid var(--purple);
+}
+
+.dateGroupBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
 .dateGroupLabel {

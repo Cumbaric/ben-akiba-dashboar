@@ -23,8 +23,8 @@ export default async function ZurkeAdmin() {
           <h1 className={styles.pageTitle}>🎉 Žurke</h1>
           <p className={styles.pageSubtitle}>{rows.length} događaja</p>
         </div>
-        <Link href="/admin/events/new" className={styles.btnPrimary}>
-          ➕ Novi događaj
+        <Link href="/admin/zurke/new" className={styles.btnPrimary}>
+          ➕ Nova žurka
         </Link>
       </div>
 

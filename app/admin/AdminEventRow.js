@@ -21,7 +21,7 @@ const FLOOR_CLASS = {
   all: 'floorAll',
 }
 
-export default function AdminEventRow({ event, hideDate = false, showFloor = false, noDateCol = false }) {
+export default function AdminEventRow({ event, hideDate = false, showFloor = false, noDateCol = false, hideReservations = false }) {
   const router = useRouter()
   const d = new Date(event.date)
   const dateStr = `${DAY_NAMES[d.getDay()]} ${String(d.getDate()).padStart(2, '0')}.${MONTH_NAMES[d.getMonth()]}`
@@ -63,9 +63,11 @@ export default function AdminEventRow({ event, hideDate = false, showFloor = fal
       </td>
       <td>
         <div className={styles.actions}>
-          <Link href={`/admin/events/${event.id}`} className={styles.editBtn} style={{ background: 'rgba(233,30,140,0.08)', borderColor: 'var(--pink)', color: 'var(--pink)' }}>
-            📋 Rezervacije
-          </Link>
+          {!hideReservations && (
+            <Link href={`/admin/events/${event.id}`} className={styles.editBtn} style={{ background: 'rgba(233,30,140,0.08)', borderColor: 'var(--pink)', color: 'var(--pink)' }}>
+              📋 Rezervacije
+            </Link>
+          )}
           <Link href={`/admin/events/edit?id=${event.id}`} className={styles.editBtn}>
             ✏️ Uredi
           </Link>

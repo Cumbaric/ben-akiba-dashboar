@@ -52,14 +52,25 @@ export default function ZurkeEventTable({ rows }) {
                 <Fragment key={g.date}>
                   <tr className={styles.dateGroupRow}>
                     <td colSpan={11}>
-                      <span className={styles.dateGroupLabel}>📅 {dateStr}</span>
-                      {g.events.length > 1 && (
-                        <span className={styles.dateGroupCount}>{g.events.length} događaja te večeri</span>
-                      )}
+                      <div className={styles.dateGroupBar}>
+                        <div>
+                          <span className={styles.dateGroupLabel}>📅 {dateStr}</span>
+                          {g.events.length > 1 && (
+                            <span className={styles.dateGroupCount}>{g.events.length} događaja te večeri</span>
+                          )}
+                        </div>
+                        <Link
+                          href={`/admin/events/${g.events[0].id}`}
+                          className={styles.editBtn}
+                          style={{ background: 'rgba(233,30,140,0.08)', borderColor: 'var(--pink)', color: 'var(--pink)' }}
+                        >
+                          📋 Rezervacije (cela večer)
+                        </Link>
+                      </div>
                     </td>
                   </tr>
                   {g.events.map(ev => (
-                    <AdminEventRow key={ev.id} event={ev} showFloor noDateCol />
+                    <AdminEventRow key={ev.id} event={ev} showFloor noDateCol hideReservations />
                   ))}
                 </Fragment>
               )

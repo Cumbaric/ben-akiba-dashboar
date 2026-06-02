@@ -4,7 +4,7 @@ import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import styles from './event.module.css'
 
-const SECTIONS = [
+export const SECTIONS = [
   { key: 'ground_floor', label: 'GROUND FLOOR (dole)', color: 'var(--green)' },
   { key: 'white_lounge', label: 'WHITE LOUNGE (gore)', color: 'var(--yellow)' },
   { key: 'after', label: 'AFTER', color: 'var(--purple)' },
@@ -66,7 +66,7 @@ function ReservationRow({ row, onUpdate, runningTotal }) {
   )
 }
 
-function ZurkaSection({ section, rows, event, onRefresh }) {
+export function ZurkaSection({ section, rows, event, onRefresh }) {
   const [newRow, setNewRow] = useState({ name: '', phone: '', num_people: 1 })
   const [adding, setAdding] = useState(false)
   const [isPending, startTransition] = useTransition()
