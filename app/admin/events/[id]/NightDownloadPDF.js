@@ -116,31 +116,37 @@ export default function NightDownloadPDF({ events, reservations }) {
           continue
         }
 
-        let running = ev.capacity || 0
-        const body = rows.map((r, i) => {
-          running -= (r.num_people || 0)
-          return [String(i + 1), r.name || '', r.phone || '', String(r.num_people || 1), String(running)]
-        })
+        const body = rows.map((r, i) => [
+          String(i + 1),
+          r.name || '',
+          r.phone || '',
+          String(r.num_people || 1),
+        ])
 
         autoTable(doc, {
           startY: yPos,
-          head: [['#', 'Ime', 'Telefon', 'Br. osoba', 'Rezervacije']],
+          head: [['#', 'Ime i prezime', 'Telefon', 'Br. osoba']],
           body,
+          foot: [[
+            { content: 'UKUPNO OSOBA', colSpan: 3, styles: { halign: 'right' } },
+            { content: String(totalPeople), styles: { halign: 'center' } },
+          ]],
           theme: 'striped',
-          styles: { font: FONT_NAME },
-          headStyles: { fillColor: [60, 20, 80], textColor: 255, fontSize: 8, fontStyle: 'bold' },
-          bodyStyles: { fontSize: 9 },
+          styles: { font: FONT_NAME, cellPadding: 2.5 },
+          headStyles: { fillColor: [60, 20, 80], textColor: 255, fontSize: 9, fontStyle: 'bold' },
+          bodyStyles: { fontSize: 9.5 },
+          footStyles: { fillColor: [235, 230, 245], textColor: [60, 20, 80], fontSize: 9.5, fontStyle: 'bold' },
+          alternateRowStyles: { fillColor: [248, 246, 251] },
           columnStyles: {
-            0: { cellWidth: 10, halign: 'center' },
-            1: { cellWidth: 78 },
-            2: { cellWidth: 46 },
-            3: { cellWidth: 20, halign: 'center' },
-            4: { cellWidth: 28, halign: 'center' },
+            0: { cellWidth: 14, halign: 'center', textColor: [150, 150, 150] },
+            1: { cellWidth: 90 },
+            2: { cellWidth: 48 },
+            3: { cellWidth: 30, halign: 'center', fontStyle: 'bold' },
           },
           margin: { left: 14, right: 14 },
           tableWidth: 182,
         })
-        yPos = doc.lastAutoTable.finalY + 10
+        yPos = doc.lastAutoTable.finalY + 12
       }
 
       // Footer
