@@ -21,7 +21,7 @@ const FLOOR_CLASS = {
   all: 'floorAll',
 }
 
-export default function AdminEventRow({ event, hideDate = false, showFloor = false }) {
+export default function AdminEventRow({ event, hideDate = false, showFloor = false, noDateCol = false }) {
   const router = useRouter()
   const d = new Date(event.date)
   const dateStr = `${DAY_NAMES[d.getDay()]} ${String(d.getDate()).padStart(2, '0')}.${MONTH_NAMES[d.getMonth()]}`
@@ -35,9 +35,11 @@ export default function AdminEventRow({ event, hideDate = false, showFloor = fal
 
   return (
     <tr>
-      <td style={{ whiteSpace: 'nowrap', color: hideDate ? 'var(--text-muted)' : undefined, paddingLeft: hideDate ? 28 : undefined }}>
-        {hideDate ? '↳' : dateStr}
-      </td>
+      {!noDateCol && (
+        <td style={{ whiteSpace: 'nowrap', color: hideDate ? 'var(--text-muted)' : undefined, paddingLeft: hideDate ? 28 : undefined }}>
+          {hideDate ? '↳' : dateStr}
+        </td>
+      )}
       <td>{event.time}</td>
       <td style={{ fontWeight: 600 }}>
         {showFloor

@@ -24,7 +24,6 @@ export default function ZurkeEventTable({ rows }) {
       <table className={styles.table}>
         <thead>
           <tr>
-            <th>Datum</th>
             <th>Vreme</th>
             <th>Sprat</th>
             <th>Izvođač</th>
@@ -41,7 +40,7 @@ export default function ZurkeEventTable({ rows }) {
         <tbody>
           {rows.length === 0 ? (
             <tr>
-              <td colSpan={12} className={styles.emptyState}>
+              <td colSpan={11} className={styles.emptyState}>
                 Nema događaja. <Link href="/admin/events/new">Dodaj prvi.</Link>
               </td>
             </tr>
@@ -52,7 +51,7 @@ export default function ZurkeEventTable({ rows }) {
               return (
                 <Fragment key={g.date}>
                   <tr className={styles.dateGroupRow}>
-                    <td colSpan={12}>
+                    <td colSpan={11}>
                       <span className={styles.dateGroupLabel}>📅 {dateStr}</span>
                       {g.events.length > 1 && (
                         <span className={styles.dateGroupCount}>{g.events.length} događaja te večeri</span>
@@ -60,7 +59,7 @@ export default function ZurkeEventTable({ rows }) {
                     </td>
                   </tr>
                   {g.events.map(ev => (
-                    <AdminEventRow key={ev.id} event={ev} hideDate showFloor />
+                    <AdminEventRow key={ev.id} event={ev} showFloor noDateCol />
                   ))}
                 </Fragment>
               )
