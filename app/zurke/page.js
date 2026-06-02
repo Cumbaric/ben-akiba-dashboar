@@ -1,3 +1,4 @@
+import { Fragment } from 'react'
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import AdminBar from '../AdminBar'
@@ -35,6 +36,25 @@ export default async function ZurkePage() {
     })
   }
 
+  // Grupisanje događaja po datumu (žurke istog dana = jedna celina)
+  const groups = []
+  const map = new Map()
+  for (const ev of (events || [])) {
+    if (!map.has(ev.date)) {
+      const g = { date: ev.date, events: [] }
+      map.set(ev.date, g)
+      groups.push(g)
+    }
+    map.get(ev.date).events.push(ev)
+  }
+
+  const fmtDate = (dateStr) => {
+    const d = new Date(dateStr)
+    return { day: DAY_NAMES[d.getDay()], date: `${String(d.getDate()).padStart(2,'0')}.${MONTH_NAMES[d.getMonth()]}.` }
+  }
+
+  const isEmpty = !events || events.length === 0
+
   return (
     <div className={styles.page}>
       <AdminBar />
@@ -69,42 +89,48 @@ export default async function ZurkePage() {
               </tr>
             </thead>
             <tbody>
-              {!events || events.length === 0 ? (
+              {isEmpty ? (
                 <tr>
                   <td colSpan={6} className={styles.emptyState}>Nema zakazanih žurki.</td>
                 </tr>
               ) : (
-                events.map((event) => {
-                  const d = new Date(event.date)
-                  const day = DAY_NAMES[d.getDay()]
-                  const date = `${String(d.getDate()).padStart(2,'0')}.${MONTH_NAMES[d.getMonth()]}.`
-                  const floorLabel = FLOOR_LABELS[event.floor]
-                  const resCount = reservationCounts[event.id] || 0
+                groups.map((g) => {
+                  const { day, date } = fmtDate(g.date)
+                  const multi = g.events.length > 1
                   return (
-                    <tr key={event.id} className={event.status === 'cancelled' ? styles.cancelled : ''}>
-                      <td>
-                        <div className={styles.dateCell}>
-                          <span className={styles.dayName}>{day}</span>
-                          <span className={styles.dateNum}>{date}</span>
-                        </div>
-                      </td>
-                      <td className={styles.timeCell}>{event.time}</td>
-                      <td>
-                        {floorLabel && <span className={styles.floorBadge}>{floorLabel}</span>}
-                        {event.status === 'cancelled' && (
-                          <span className={styles.cancelBadge}>Otkazano</span>
-                        )}
-                      </td>
-                      <td className={styles.performerCell}>{event.performer}</td>
-                      <td className={styles.resCell}>
-                        <span className={styles.resBadge}>{resCount}</span>
-                      </td>
-                      <td className={styles.priceCell}>
-                        <span className={styles.priceBadge}>
-                          {Number(event.price).toLocaleString('sr-RS')} RSD
-                        </span>
-                      </td>
-                    </tr>
+                    <Fragment key={g.date}>
+                      <tr className={styles.dateGroupRow}>
+                        <td colSpan={6}>
+                          <span className={styles.dateGroupLabel}>📅 {day} {date}</span>
+                          {multi && <span className={styles.dateGroupCount}>{g.events.length} događaja te večeri</span>}
+                        </td>
+                      </tr>
+                      {g.events.map((event) => {
+                        const floorLabel = FLOOR_LABELS[event.floor]
+                        const resCount = reservationCounts[event.id] || 0
+                        return (
+                          <tr key={event.id} className={event.status === 'cancelled' ? styles.cancelled : ''}>
+                            <td className={styles.subDateCell}>{multi ? '↳' : ''}</td>
+                            <td className={styles.timeCell}>{event.time}</td>
+                            <td>
+                              {floorLabel && <span className={styles.floorBadge}>{floorLabel}</span>}
+                              {event.status === 'cancelled' && (
+                                <span className={styles.cancelBadge}>Otkazano</span>
+                              )}
+                            </td>
+                            <td className={styles.performerCell}>{event.performer}</td>
+                            <td className={styles.resCell}>
+                              <span className={styles.resBadge}>{resCount}</span>
+                            </td>
+                            <td className={styles.priceCell}>
+                              <span className={styles.priceBadge}>
+                                {Number(event.price).toLocaleString('sr-RS')} RSD
+                              </span>
+                            </td>
+                          </tr>
+                        )
+                      })}
+                    </Fragment>
                   )
                 })
               )}
@@ -112,54 +138,50 @@ export default async function ZurkePage() {
           </table>
         </div>
 
-        {/* ── MOBILE CARDS ── */}
+        {/* ── MOBILE CARDS (jedna kartica po danu) ── */}
         <div className={styles.mobileCards}>
-          {!events || events.length === 0 ? (
+          {isEmpty ? (
             <div className={styles.emptyState}>Nema zakazanih žurki.</div>
           ) : (
-            events.map((event) => {
-              const d = new Date(event.date)
-              const day = DAY_NAMES[d.getDay()]
-              const date = `${String(d.getDate()).padStart(2,'0')}.${MONTH_NAMES[d.getMonth()]}.`
-              const floorLabel = FLOOR_LABELS[event.floor]
-              const resCount = reservationCounts[event.id] || 0
+            groups.map((g) => {
+              const { day, date } = fmtDate(g.date)
+              const multi = g.events.length > 1
               return (
-                <div key={event.id} className={`${styles.mobileCard} ${event.status === 'cancelled' ? styles.cancelled : ''}`}>
-
-                  {/* Datum + vreme */}
+                <div key={g.date} className={styles.mobileCard}>
+                  {/* Datum (zaglavlje kartice) */}
                   <div className={styles.mobileRow1}>
                     <span className={styles.mobileDayName}>{day}</span>
                     <span className={styles.mobileDateNum}>{date}</span>
-                    <span className={styles.mobileSep}>·</span>
-                    <span className={styles.mobileTime}>🕐 {event.time}</span>
+                    {multi && <span className={styles.mobileCount}>{g.events.length} događaja</span>}
                   </div>
 
-                  {/* Naziv */}
-                  <div className={styles.mobileTitle}>
-                    {event.title}
-                    {event.status === 'cancelled' && (
-                      <span className={styles.cancelBadge}>Otkazano</span>
-                    )}
-                  </div>
+                  {/* Događaji tog dana */}
+                  {g.events.map((event) => {
+                    const floorLabel = FLOOR_LABELS[event.floor]
+                    const resCount = reservationCounts[event.id] || 0
+                    return (
+                      <div key={event.id} className={`${styles.mobileEventBlock} ${event.status === 'cancelled' ? styles.cancelled : ''}`}>
+                        <div className={styles.mobileEventTop}>
+                          {floorLabel && <span className={styles.floorBadge}>{floorLabel}</span>}
+                          <span className={styles.mobileTime}>🕐 {event.time}</span>
+                          {event.status === 'cancelled' && (
+                            <span className={styles.cancelBadge}>Otkazano</span>
+                          )}
+                        </div>
 
-                  {/* Sprat */}
-                  {floorLabel && (
-                    <div className={styles.mobileFloorRow}>
-                      <span className={styles.floorBadge}>{floorLabel}</span>
-                    </div>
-                  )}
+                        {event.title && <div className={styles.mobileTitle}>{event.title}</div>}
 
-                  {/* Izvođač */}
-                  <div className={styles.mobilePerformer}>👤 {event.performer}</div>
+                        <div className={styles.mobilePerformer}>👤 {event.performer}</div>
 
-                  {/* Rezervacije + cena */}
-                  <div className={styles.mobileCardBottom}>
-                    <span className={styles.mobileResWrap}>
-                      👥 Rezervacije: <span className={styles.resBadge}>{resCount}</span>
-                    </span>
-                    <span className={styles.priceBadge}>{Number(event.price).toLocaleString('sr-RS')} RSD</span>
-                  </div>
-
+                        <div className={styles.mobileCardBottom}>
+                          <span className={styles.mobileResWrap}>
+                            👥 Rezervacije: <span className={styles.resBadge}>{resCount}</span>
+                          </span>
+                          <span className={styles.priceBadge}>{Number(event.price).toLocaleString('sr-RS')} RSD</span>
+                        </div>
+                      </div>
+                    )
+                  })}
                 </div>
               )
             })

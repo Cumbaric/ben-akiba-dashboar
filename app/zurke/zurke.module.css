@@ -135,6 +135,35 @@
 .priceBadge { display: inline-block; padding: 5px 14px; border-radius: 8px; background: rgba(0,229,255,0.06); border: 1px solid rgba(0,229,255,0.2); color: #00e5ff; font-size: 13px; font-weight: 700; white-space: nowrap; }
 .emptyState { text-align: center; padding: 60px 24px; color: #334455; font-size: 14px; }
 
+/* ── Grupisanje po datumu (desktop) ── */
+.dateGroupRow td {
+  background: rgba(0,229,255,0.05);
+  border-top: 2px solid rgba(0,229,255,0.4);
+  padding: 10px 20px;
+}
+.dateGroupLabel {
+  font-size: 13px;
+  font-weight: 800;
+  color: #00e5ff;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.dateGroupCount {
+  margin-left: 14px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #88c4d4;
+  background: rgba(0,229,255,0.1);
+  border: 1px solid rgba(0,229,255,0.3);
+  padding: 2px 10px;
+  border-radius: 12px;
+}
+.subDateCell {
+  text-align: center;
+  color: #44566a;
+  font-size: 14px;
+}
+
 .floorBadge {
   display: inline-block;
   padding: 3px 10px;
@@ -201,6 +230,34 @@
 }
 
 .mobileCard.cancelled { opacity: 0.45; }
+
+/* Badge sa brojem događaja te večeri */
+.mobileCount {
+  margin-left: auto;
+  font-size: 10px;
+  font-weight: 700;
+  color: #88c4d4;
+  background: rgba(0,229,255,0.1);
+  border: 1px solid rgba(0,229,255,0.3);
+  padding: 2px 9px;
+  border-radius: 12px;
+}
+
+/* Pojedinačni događaj unutar dnevne kartice */
+.mobileEventBlock {
+  padding-top: 12px;
+  margin-top: 12px;
+  border-top: 1px solid #0e1e2e;
+}
+.mobileEventBlock.cancelled { opacity: 0.45; }
+
+.mobileEventTop {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
 
 /* Row 1: datum + vreme */
 .mobileRow1 {
