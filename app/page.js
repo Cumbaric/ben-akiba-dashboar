@@ -1,9 +1,13 @@
 import Link from 'next/link'
+import AdminBar from './AdminBar'
 import styles from './page.module.css'
+
+export const dynamic = 'force-dynamic'
 
 export default function Home() {
   return (
     <div className={styles.page}>
+      <AdminBar />
 
       {/* ── BACKGROUND LIGHTS ── */}
       <div className={styles.bg}>

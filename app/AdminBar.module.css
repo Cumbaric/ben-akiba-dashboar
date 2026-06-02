@@ -1,0 +1,55 @@
+.bar {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 8px 20px;
+  background: linear-gradient(90deg, rgba(233,30,140,0.18), rgba(179,136,255,0.18));
+  border-bottom: 1px solid rgba(233,30,140,0.35);
+  backdrop-filter: blur(8px);
+}
+
+.badge {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #fff;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.link {
+  font-size: 12px;
+  font-weight: 600;
+  color: #d8d8ea;
+  padding: 5px 12px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  transition: background 0.15s, color 0.15s;
+}
+
+.link:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.linkPrimary {
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  padding: 5px 14px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #e91e8c, #b388ff);
+}
+
+.linkPrimary:hover {
+  opacity: 0.9;
+}

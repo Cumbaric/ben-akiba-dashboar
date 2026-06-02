@@ -1,5 +1,6 @@
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
+import AdminBar from '../AdminBar'
 import styles from './zurke.module.css'
 
 const DAY_NAMES = ['NED', 'PON', 'UTO', 'SRE', 'ČET', 'PET', 'SUB']
@@ -36,6 +37,7 @@ export default async function ZurkePage() {
 
   return (
     <div className={styles.page}>
+      <AdminBar />
       <header className={styles.header}>
         <Link href="/" className={styles.backBtn}>← Nazad</Link>
         <div className={styles.logoWrap}>
