@@ -60,7 +60,7 @@ export default function ZurkeEventTable({ rows }) {
                     </td>
                   </tr>
                   {g.events.map(ev => (
-                    <AdminEventRow key={ev.id} event={ev} hideDate={g.events.length > 1} showFloor />
+                    <AdminEventRow key={ev.id} event={ev} hideDate showFloor />
                   ))}
                 </Fragment>
               )
