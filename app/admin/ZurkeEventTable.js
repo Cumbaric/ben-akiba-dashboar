@@ -26,7 +26,7 @@ export default function ZurkeEventTable({ rows }) {
           <tr>
             <th>Datum</th>
             <th>Vreme</th>
-            <th>Predstava</th>
+            <th>Sprat</th>
             <th>Izvođač</th>
             <th>Cena</th>
             <th>Prodato</th>
@@ -60,7 +60,7 @@ export default function ZurkeEventTable({ rows }) {
                     </td>
                   </tr>
                   {g.events.map(ev => (
-                    <AdminEventRow key={ev.id} event={ev} hideDate={g.events.length > 1} />
+                    <AdminEventRow key={ev.id} event={ev} hideDate={g.events.length > 1} showFloor />
                   ))}
                 </Fragment>
               )

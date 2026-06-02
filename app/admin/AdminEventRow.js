@@ -7,7 +7,14 @@ import styles from './admin.module.css'
 const DAY_NAMES = ['NED', 'PON', 'UTO', 'SRE', 'ČET', 'PET', 'SUB']
 const MONTH_NAMES = ['JAN', 'FEB', 'MAR', 'APR', 'MAJ', 'JUN', 'JUL', 'AVG', 'SEP', 'OKT', 'NOV', 'DEC']
 
-export default function AdminEventRow({ event, hideDate = false }) {
+const FLOOR_LABELS = {
+  ground_floor: 'Ground Floor',
+  white_lounge: 'White Lounge',
+  after: 'After',
+  all: 'Sve sale',
+}
+
+export default function AdminEventRow({ event, hideDate = false, showFloor = false }) {
   const router = useRouter()
   const d = new Date(event.date)
   const dateStr = `${DAY_NAMES[d.getDay()]} ${String(d.getDate()).padStart(2, '0')}.${MONTH_NAMES[d.getMonth()]}`
@@ -25,7 +32,11 @@ export default function AdminEventRow({ event, hideDate = false }) {
         {hideDate ? '↳' : dateStr}
       </td>
       <td>{event.time}</td>
-      <td style={{ fontWeight: 600 }}>{event.title}</td>
+      <td style={{ fontWeight: 600 }}>
+        {showFloor
+          ? (FLOOR_LABELS[event.floor] || <span style={{ color: 'var(--text-muted)' }}>—</span>)
+          : event.title}
+      </td>
       <td style={{ color: 'var(--text-secondary)', fontSize: 13 }}>{event.performer}</td>
       <td style={{ whiteSpace: 'nowrap' }}>{Number(event.price).toLocaleString('sr-RS')} RSD</td>
       <td><span className={`${styles.statNum} ${styles.pink}`}>{event.sold ?? 0}</span></td>
