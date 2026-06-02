@@ -7,7 +7,7 @@ import styles from './admin.module.css'
 const DAY_NAMES = ['NED', 'PON', 'UTO', 'SRE', 'ČET', 'PET', 'SUB']
 const MONTH_NAMES = ['JAN', 'FEB', 'MAR', 'APR', 'MAJ', 'JUN', 'JUL', 'AVG', 'SEP', 'OKT', 'NOV', 'DEC']
 
-export default function AdminEventRow({ event }) {
+export default function AdminEventRow({ event, hideDate = false }) {
   const router = useRouter()
   const d = new Date(event.date)
   const dateStr = `${DAY_NAMES[d.getDay()]} ${String(d.getDate()).padStart(2, '0')}.${MONTH_NAMES[d.getMonth()]}`
@@ -21,7 +21,9 @@ export default function AdminEventRow({ event }) {
 
   return (
     <tr>
-      <td style={{ whiteSpace: 'nowrap' }}>{dateStr}</td>
+      <td style={{ whiteSpace: 'nowrap', color: hideDate ? 'var(--text-muted)' : undefined, paddingLeft: hideDate ? 28 : undefined }}>
+        {hideDate ? '↳' : dateStr}
+      </td>
       <td>{event.time}</td>
       <td style={{ fontWeight: 600 }}>{event.title}</td>
       <td style={{ color: 'var(--text-secondary)', fontSize: 13 }}>{event.performer}</td>

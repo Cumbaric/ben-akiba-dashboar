@@ -1,7 +1,7 @@
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import AdminTabs from '../AdminTabs'
-import EventTable from '../EventTable'
+import ZurkeEventTable from '../ZurkeEventTable'
 import styles from '../admin.module.css'
 
 export const revalidate = 0
@@ -37,7 +37,7 @@ export default async function ZurkeAdmin() {
         </div>
       </div>
 
-      <EventTable rows={rows} />
+      <ZurkeEventTable rows={rows} />
     </div>
   )
 }
