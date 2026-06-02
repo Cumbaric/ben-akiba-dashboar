@@ -14,6 +14,13 @@ const FLOOR_LABELS = {
   all: 'Sve sale',
 }
 
+const FLOOR_CLASS = {
+  ground_floor: 'floorGround',
+  white_lounge: 'floorWhite',
+  after: 'floorAfter',
+  all: 'floorAll',
+}
+
 export default function AdminEventRow({ event, hideDate = false, showFloor = false }) {
   const router = useRouter()
   const d = new Date(event.date)
@@ -34,7 +41,9 @@ export default function AdminEventRow({ event, hideDate = false, showFloor = fal
       <td>{event.time}</td>
       <td style={{ fontWeight: 600 }}>
         {showFloor
-          ? (FLOOR_LABELS[event.floor] || <span style={{ color: 'var(--text-muted)' }}>—</span>)
+          ? (FLOOR_LABELS[event.floor]
+              ? <span className={`${styles.floorTag} ${styles[FLOOR_CLASS[event.floor]] || ''}`}>{FLOOR_LABELS[event.floor]}</span>
+              : <span style={{ color: 'var(--text-muted)' }}>—</span>)
           : event.title}
       </td>
       <td style={{ color: 'var(--text-secondary)', fontSize: 13 }}>{event.performer}</td>

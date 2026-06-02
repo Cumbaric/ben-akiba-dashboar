@@ -14,6 +14,12 @@ const FLOOR_LABELS = {
   all: null,
 }
 
+const FLOOR_CLASS = {
+  ground_floor: 'floorGround',
+  white_lounge: 'floorWhite',
+  after: 'floorAfter',
+}
+
 export const dynamic = 'force-dynamic'
 
 export default async function ZurkePage() {
@@ -113,7 +119,7 @@ export default async function ZurkePage() {
                             <td className={styles.subDateCell}>{multi ? '↳' : ''}</td>
                             <td className={styles.timeCell}>{event.time}</td>
                             <td>
-                              {floorLabel && <span className={styles.floorBadge}>{floorLabel}</span>}
+                              {floorLabel && <span className={`${styles.floorBadge} ${styles[FLOOR_CLASS[event.floor]] || ''}`}>{floorLabel}</span>}
                               {event.status === 'cancelled' && (
                                 <span className={styles.cancelBadge}>Otkazano</span>
                               )}
@@ -162,7 +168,7 @@ export default async function ZurkePage() {
                     return (
                       <div key={event.id} className={`${styles.mobileEventBlock} ${event.status === 'cancelled' ? styles.cancelled : ''}`}>
                         <div className={styles.mobileEventTop}>
-                          {floorLabel && <span className={styles.floorBadge}>{floorLabel}</span>}
+                          {floorLabel && <span className={`${styles.floorBadge} ${styles[FLOOR_CLASS[event.floor]] || ''}`}>{floorLabel}</span>}
                           <span className={styles.mobileTime}>🕐 {event.time}</span>
                           {event.status === 'cancelled' && (
                             <span className={styles.cancelBadge}>Otkazano</span>

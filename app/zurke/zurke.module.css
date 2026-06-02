@@ -177,6 +177,23 @@
   white-space: nowrap;
 }
 
+/* Boje po spratu (za lakše raspoznavanje) */
+.floorGround {
+  background: rgba(0,230,118,0.1);
+  border-color: rgba(0,230,118,0.45);
+  color: #00e676;
+}
+.floorWhite {
+  background: rgba(179,136,255,0.12);
+  border-color: rgba(179,136,255,0.5);
+  color: #c4adff;
+}
+.floorAfter {
+  background: rgba(255,179,0,0.12);
+  border-color: rgba(255,179,0,0.45);
+  color: #ffb300;
+}
+
 .resCell { text-align: center; }
 
 .resBadge {
