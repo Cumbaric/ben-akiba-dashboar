@@ -118,47 +118,49 @@ export function ZurkaSection({ section, rows, event, onRefresh }) {
         </div>
       </div>
 
-      <table className={styles.resTable}>
-        <thead>
-          <tr>
-            <th>Ime</th>
-            <th>Telefon</th>
-            <th>Br. osoba</th>
-            <th>Rezervacije</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((row, i) => (
-            <ReservationRow
-              key={row.id}
-              row={row}
-              runningTotal={runningTotals[i]}
-              onUpdate={onRefresh}
-            />
-          ))}
-          {adding ? (
-            <tr className={styles.addingRow}>
-              <td><input className={styles.inlineInput} value={newRow.name} onChange={e => setNewRow(f => ({ ...f, name: e.target.value }))} placeholder="Ime" autoFocus /></td>
-              <td><input className={styles.inlineInput} value={newRow.phone} onChange={e => setNewRow(f => ({ ...f, phone: e.target.value }))} placeholder="Telefon" /></td>
-              <td><input className={styles.inlineInput} type="number" min="1" value={newRow.num_people} onChange={e => setNewRow(f => ({ ...f, num_people: parseInt(e.target.value) || 1 }))} style={{ width: 60 }} /></td>
-              <td></td>
-              <td>
-                <div style={{ display: 'flex', gap: 6 }}>
-                  <button className={styles.confirmBtn} onClick={addRow} disabled={isPending}>✓</button>
-                  <button className={styles.cancelSmBtn} onClick={() => setAdding(false)}>✕</button>
-                </div>
-              </td>
-            </tr>
-          ) : (
+      <div className={styles.tableWrap}>
+        <table className={styles.resTable}>
+          <thead>
             <tr>
-              <td colSpan={5}>
-                <button className={styles.addRowBtn} onClick={() => setAdding(true)}>+ Dodaj rezervaciju</button>
-              </td>
+              <th>Ime</th>
+              <th>Telefon</th>
+              <th>Br. osoba</th>
+              <th>Rezervacije</th>
+              <th></th>
             </tr>
-          )}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {rows.map((row, i) => (
+              <ReservationRow
+                key={row.id}
+                row={row}
+                runningTotal={runningTotals[i]}
+                onUpdate={onRefresh}
+              />
+            ))}
+            {adding ? (
+              <tr className={styles.addingRow}>
+                <td><input className={styles.inlineInput} value={newRow.name} onChange={e => setNewRow(f => ({ ...f, name: e.target.value }))} placeholder="Ime" autoFocus /></td>
+                <td><input className={styles.inlineInput} value={newRow.phone} onChange={e => setNewRow(f => ({ ...f, phone: e.target.value }))} placeholder="Telefon" /></td>
+                <td><input className={styles.inlineInput} type="number" min="1" value={newRow.num_people} onChange={e => setNewRow(f => ({ ...f, num_people: parseInt(e.target.value) || 1 }))} style={{ width: 60 }} /></td>
+                <td></td>
+                <td>
+                  <div style={{ display: 'flex', gap: 6 }}>
+                    <button className={styles.confirmBtn} onClick={addRow} disabled={isPending}>✓</button>
+                    <button className={styles.cancelSmBtn} onClick={() => setAdding(false)}>✕</button>
+                  </div>
+                </td>
+              </tr>
+            ) : (
+              <tr>
+                <td colSpan={5}>
+                  <button className={styles.addRowBtn} onClick={() => setAdding(true)}>+ Dodaj rezervaciju</button>
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   )
 }

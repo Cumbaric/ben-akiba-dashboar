@@ -109,8 +109,14 @@
 }
 
 /* Reservation table */
+.tableWrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 .resTable {
   width: 100%;
+  min-width: 480px;
   border-collapse: collapse;
 }
 
@@ -294,7 +300,7 @@
   min-width: 80px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .tablesGrid {
     grid-template-columns: 1fr;
   }
@@ -305,5 +311,25 @@
 
   .summaryItem {
     min-width: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .resTable {
+    min-width: 420px;
+  }
+
+  .resTable tbody td,
+  .resTable thead th {
+    padding: 8px 6px;
+    font-size: 13px;
+  }
+
+  .confirmedBtn,
+  .notConfirmedBtn,
+  .confirmBtn,
+  .cancelSmBtn {
+    width: 26px;
+    height: 26px;
   }
 }
