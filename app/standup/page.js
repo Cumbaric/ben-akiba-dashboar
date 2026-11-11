@@ -1,4 +1,6 @@
 import { supabase } from '@/lib/supabase'
+import { sortUpcomingFirst, sortForMonth } from '@/lib/sortEvents'
+import { monthRange } from '@/lib/months'
 import Link from 'next/link'
 import AdminBar from '../AdminBar'
 import styles from './standup.module.css'
@@ -8,12 +10,19 @@ const MONTH_NAMES = ['01','02','03','04','05','06','07','08','09','10','11','12'
 
 export const dynamic = 'force-dynamic'
 
-export default async function StandupPage() {
-  const { data: events } = await supabase
+export default async function StandupPage({ searchParams }) {
+  const { mesec } = await searchParams
+  const range = monthRange(mesec)
+
+  let query = supabase
     .from('events')
     .select('*')
     .eq('event_type', 'standup')
     .order('date', { ascending: true })
+  if (range) query = query.gte('date', range.start).lt('date', range.end)
+  const { data } = await query
+  const events = range ? sortForMonth(data, mesec) : sortUpcomingFirst(data)
+  const backHref = range ? `/mesec/${mesec}` : '/'
 
   // Dohvati rezervacije za statistiku po eventu
   const { data: reservations } = await supabase
@@ -42,7 +51,7 @@ export default async function StandupPage() {
     <div className={styles.page}>
       <AdminBar />
       <header className={styles.header}>
-        <Link href="/" className={styles.backBtn}>← Nazad</Link>
+        <Link href={backHref} className={styles.backBtn}>← Nazad</Link>
 
         <div className={styles.logoWrap}>
           <img src="/logo-transparent.png" alt="Ben Akiba" className={styles.logoImg} />

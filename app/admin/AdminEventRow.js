@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { isPastEvent } from '@/lib/sortEvents'
 import styles from './admin.module.css'
 
 const DAY_NAMES = ['NED', 'PON', 'UTO', 'SRE', 'ČET', 'PET', 'SUB']
@@ -56,9 +57,11 @@ export default function AdminEventRow({ event, hideDate = false, showFloor = fal
       <td><span className={`${styles.statNum} ${styles.purple}`}>{event.waitlist ?? 0}</span></td>
       <td><span className={`${styles.statNum} ${styles.green}`}>{freeSeats}</span></td>
       <td>
-        <span className={`${styles.statusBadge} ${event.status === 'active' ? styles.active : styles.cancelled}`}>
+        <span className={`${styles.statusBadge} ${
+          event.status !== 'active' ? styles.cancelled : isPastEvent(event) ? styles.ended : styles.active
+        }`}>
           <span className={styles.dot} />
-          {event.status === 'active' ? 'Aktivno' : 'Otkazano'}
+          {event.status !== 'active' ? 'Otkazano' : isPastEvent(event) ? 'Završeno' : 'Aktivno'}
         </span>
       </td>
       <td>

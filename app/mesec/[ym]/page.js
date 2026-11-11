@@ -1,0 +1,86 @@
+import Link from 'next/link'
+import { notFound } from 'next/navigation'
+import AdminBar from '../../AdminBar'
+import { monthLabel, parseMonthKey } from '@/lib/months'
+import styles from '../../page.module.css'
+
+export const dynamic = 'force-dynamic'
+
+export default async function MonthChoice({ params }) {
+  const { ym } = await params
+  const parsed = parseMonthKey(ym)
+  if (!parsed) notFound()
+
+  return (
+    <div className={styles.page}>
+      <AdminBar />
+
+      {/* ── BACKGROUND LIGHTS ── */}
+      <div className={styles.bg}>
+        <div className={styles.bgLight} />
+        <div className={styles.bgLight} />
+        <div className={styles.bgLight} />
+        <div className={styles.bgLight} />
+        <div className={styles.bgLight} />
+        <div className={styles.bgLight} />
+        <div className={styles.bgGlow} />
+        <div className={styles.bgGlow} />
+      </div>
+
+      {/* ── CONTENT ── */}
+      <div className={styles.content}>
+
+        {/* Logo */}
+        <div className={styles.logoWrap}>
+          <img src="/logo-transparent.png" alt="Ben Akiba" className={styles.logoImg} />
+          <div className={styles.logoSub}>
+            Comedy Club &amp; Bar<br />White Lounge &amp; Art Gallery
+          </div>
+        </div>
+
+        {/* Divider */}
+        <div className={styles.divider}>
+          <div className={styles.dividerLine} />
+          <div className={styles.dividerText}>Izaberi događaj</div>
+          <div className={styles.dividerLine} />
+        </div>
+
+        <div className={styles.monthTitle}>{monthLabel(ym)} {parsed.year}</div>
+        <div style={{ height: 24 }} />
+
+        {/* Cards */}
+        <div className={styles.cards}>
+
+          {/* Stand Up */}
+          <Link href={`/standup?mesec=${ym}`} className={`${styles.card} ${styles.cardStandup}`}>
+            <div className={`${styles.cardIcon} ${styles.cardIconStandup}`}>🎤</div>
+            <div className={styles.cardTitle}>Stand Up</div>
+            <div className={`${styles.cardSub} ${styles.cardSubStandup}`}>
+              Pogledaj<br />repertoar
+            </div>
+            <div className={`${styles.cardArrow} ${styles.cardArrowStandup}`}>→</div>
+          </Link>
+
+          {/* Žurka */}
+          <Link href={`/zurke?mesec=${ym}`} className={`${styles.card} ${styles.cardZurka}`}>
+            <div className={`${styles.cardIcon} ${styles.cardIconZurka}`}>🪩</div>
+            <div className={styles.cardTitle}>Žurka</div>
+            <div className={`${styles.cardSub} ${styles.cardSubZurka}`}>
+              Pogledaj<br />repertoar
+            </div>
+            <div className={`${styles.cardArrow} ${styles.cardArrowZurka}`}>→</div>
+          </Link>
+
+        </div>
+
+        <Link href="/" className={styles.monthBack}>← Svi meseci</Link>
+      </div>
+
+      {/* ── FOOTER ── */}
+      <div className={styles.footer}>
+        Ben Akiba &nbsp;·&nbsp; Belgrade &nbsp;·&nbsp; Good Vibes Only
+      </div>
+
+    </div>
+  )
+}

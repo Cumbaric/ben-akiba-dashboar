@@ -22,7 +22,7 @@ export default function LoginPage() {
     if (res.ok) {
       // Full page navigation so the fresh session cookie is sent and no stale
       // client router cache (cached redirect to /admin/login) is used.
-      window.location.assign('/admin/standup')
+      window.location.assign('/admin')
     } else {
       const data = await res.json()
       setError(data.error || 'Greška pri prijavi')

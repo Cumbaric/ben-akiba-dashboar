@@ -1,5 +1,7 @@
 import { Fragment } from 'react'
 import { supabase } from '@/lib/supabase'
+import { sortUpcomingFirst, sortForMonth } from '@/lib/sortEvents'
+import { monthRange } from '@/lib/months'
 import Link from 'next/link'
 import AdminBar from '../AdminBar'
 import styles from './zurke.module.css'
@@ -22,12 +24,19 @@ const FLOOR_CLASS = {
 
 export const dynamic = 'force-dynamic'
 
-export default async function ZurkePage() {
-  const { data: events } = await supabase
+export default async function ZurkePage({ searchParams }) {
+  const { mesec } = await searchParams
+  const range = monthRange(mesec)
+
+  let query = supabase
     .from('events')
     .select('*')
     .eq('event_type', 'zurka')
     .order('date', { ascending: true })
+  if (range) query = query.gte('date', range.start).lt('date', range.end)
+  const { data } = await query
+  const events = range ? sortForMonth(data, mesec) : sortUpcomingFirst(data)
+  const backHref = range ? `/mesec/${mesec}` : '/'
 
   // Dohvati broj rezervacija po eventu
   const { data: reservations } = await supabase
@@ -65,7 +74,7 @@ export default async function ZurkePage() {
     <div className={styles.page}>
       <AdminBar />
       <header className={styles.header}>
-        <Link href="/" className={styles.backBtn}>← Nazad</Link>
+        <Link href={backHref} className={styles.backBtn}>← Nazad</Link>
         <div className={styles.logoWrap}>
           <img src="/logo-transparent.png" alt="Ben Akiba" className={styles.logoImg} />
           <div className={styles.logoSub}>Comedy Club &amp; Bar · White Lounge &amp; Art Gallery</div>

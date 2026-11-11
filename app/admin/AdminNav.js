@@ -16,7 +16,7 @@ export default function AdminNav() {
   return (
     <nav className={styles.nav}>
       <div className={styles.navLogo}>
-        <Link href="/admin/standup">
+        <Link href="/admin">
           <img src="/logo-transparent.png" alt="Ben Akiba" className={styles.navLogoImg} />
         </Link>
         <span className={styles.navBadge}>Admin</span>
@@ -24,6 +24,9 @@ export default function AdminNav() {
       <div className={styles.navLinks}>
         <Link href="/" className={styles.navLink} target="_blank">
           👁 Javni sajt
+        </Link>
+        <Link href="/admin" className={styles.navLink}>
+          📅 Meseci
         </Link>
         <Link href="/admin/standup" className={styles.navLink}>
           🎤 Stand Up

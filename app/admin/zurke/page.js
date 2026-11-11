@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabase'
+import { sortUpcomingFirst, isPastEvent } from '@/lib/sortEvents'
 import Link from 'next/link'
 import AdminTabs from '../AdminTabs'
 import ZurkeEventTable from '../ZurkeEventTable'
@@ -13,8 +14,8 @@ export default async function ZurkeAdmin() {
     .eq('event_type', 'zurka')
     .order('date', { ascending: true })
 
-  const rows = data ?? []
-  const activeCount = rows.filter(e => e.status === 'active').length
+  const rows = sortUpcomingFirst(data)
+  const activeCount = rows.filter(e => e.status === 'active' && !isPastEvent(e)).length
 
   return (
     <div>

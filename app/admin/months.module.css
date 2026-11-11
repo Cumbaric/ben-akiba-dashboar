@@ -1,0 +1,210 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 24px;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 12px 0 32px;
+  width: 100%;
+  max-width: 560px;
+}
+
+.dividerLine {
+  flex: 1;
+  height: 1px;
+  background: #2a2a45;
+}
+
+.dividerText {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: #b9b2e6;
+  white-space: nowrap;
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 22px;
+  width: 100%;
+  max-width: 1000px;
+}
+
+.empty {
+  color: #8888aa;
+  font-size: 13px;
+  text-align: center;
+}
+
+.card {
+  flex: 0 0 210px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 28px 16px 24px;
+  border-radius: 18px;
+  border: 1.5px solid var(--c);
+  background: rgba(255, 255, 255, 0.02);
+  text-decoration: none;
+  color: #fff;
+  box-shadow: 0 0 28px color-mix(in srgb, var(--c) 14%, transparent),
+    inset 0 0 40px color-mix(in srgb, var(--c) 4%, transparent);
+  transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  background: color-mix(in srgb, var(--c) 7%, transparent);
+  box-shadow: 0 8px 40px color-mix(in srgb, var(--c) 24%, transparent),
+    inset 0 0 40px color-mix(in srgb, var(--c) 6%, transparent);
+}
+
+.pink { --c: #ff3fa4; }
+.cyan { --c: #19e3e8; }
+.purple { --c: #a47cff; }
+
+.currentTag {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--c);
+  border: 1px solid var(--c);
+  border-radius: 20px;
+  padding: 2px 8px;
+}
+
+.cardIcon {
+  font-size: 40px;
+  line-height: 1;
+  margin-bottom: 14px;
+}
+
+.cardTitle {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.cardYear {
+  font-size: 12px;
+  letter-spacing: 3px;
+  color: #8888aa;
+  margin-top: 4px;
+}
+
+.cardCounts {
+  display: flex;
+  gap: 14px;
+  margin: 16px 0 14px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #d0d0e8;
+}
+
+.cardSub {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--c);
+  line-height: 1.7;
+}
+
+.cardArrow {
+  margin-top: 14px;
+  font-size: 22px;
+  color: var(--c);
+  transition: transform 0.2s;
+}
+
+.card:hover .cardArrow {
+  transform: translateX(4px);
+}
+
+.quickLinks {
+  display: flex;
+  gap: 24px;
+  margin-top: 48px;
+  font-size: 13px;
+}
+
+.quickLinks a {
+  color: #8888aa;
+  text-decoration: none;
+}
+
+.quickLinks a:hover {
+  color: #fff;
+}
+
+/* ── Month detail page ── */
+.backLink {
+  display: inline-block;
+  margin-bottom: 14px;
+  font-size: 13px;
+  color: #8888aa;
+  text-decoration: none;
+}
+
+.backLink:hover {
+  color: #fff;
+}
+
+.section {
+  margin-top: 36px;
+}
+
+.sectionHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.sectionTitle {
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.sectionCount {
+  margin-left: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #8888aa;
+}
+
+.monthNav {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 600px) {
+  .cards {
+    gap: 14px;
+  }
+  .card {
+    flex: 0 0 calc(50% - 7px);
+  }
+  .cardTitle {
+    font-size: 17px;
+    letter-spacing: 2px;
+  }
+}
