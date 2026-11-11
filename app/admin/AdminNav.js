@@ -1,16 +1,13 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import styles from './admin.module.css'
 
 export default function AdminNav() {
-  const router = useRouter()
-
   async function handleLogout() {
     await fetch('/api/auth', { method: 'DELETE' })
-    router.push('/admin/login')
-    router.refresh()
+    // Pun reload na javnu početnu, da se ukloni admin stanje i keš
+    window.location.assign('/')
   }
 
   return (
