@@ -1,11 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import styles from './login.module.css'
 
 export default function LoginPage() {
-  const router = useRouter()
   const [form, setForm] = useState({ username: '', password: '' })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -22,8 +20,9 @@ export default function LoginPage() {
     })
 
     if (res.ok) {
-      router.push('/admin/standup')
-      router.refresh()
+      // Full page navigation so the fresh session cookie is sent and no stale
+      // client router cache (cached redirect to /admin/login) is used.
+      window.location.assign('/admin/standup')
     } else {
       const data = await res.json()
       setError(data.error || 'Greška pri prijavi')
