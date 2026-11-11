@@ -13,7 +13,7 @@ export default async function AdminBar() {
       <div className={styles.links}>
         <Link href="/admin/standup" className={styles.link}>🎤 Stand Up</Link>
         <Link href="/admin/zurke" className={styles.link}>🎉 Žurke</Link>
-        <Link href="/admin/standup" className={styles.linkPrimary}>← Admin panel</Link>
+        <Link href="/admin" className={styles.linkPrimary}>← Admin panel</Link>
       </div>
     </div>
   )

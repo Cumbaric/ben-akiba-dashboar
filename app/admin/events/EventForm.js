@@ -53,7 +53,8 @@ export default function EventForm({ event }) {
     })
 
     if (res.ok) {
-      router.push('/admin/standup')
+      const base = form.event_type === 'zurka' ? '/admin/zurke' : '/admin/standup'
+      router.push(form.date ? `${base}/${String(form.date).slice(0, 7)}` : base)
       router.refresh()
     } else {
       const data = await res.json()

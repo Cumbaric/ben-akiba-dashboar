@@ -68,7 +68,7 @@ export default function ZurkaForm() {
     })
 
     if (res.ok) {
-      router.push('/admin/zurke')
+      router.push(`/admin/zurke/${String(date).slice(0, 7)}`)
       router.refresh()
     } else {
       const data = await res.json().catch(() => ({}))

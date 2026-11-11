@@ -1,50 +1,22 @@
-import { supabase } from '@/lib/supabase'
-import { sortUpcomingFirst, isPastEvent } from '@/lib/sortEvents'
-import { withStandupStats } from '@/lib/standupStats'
-import Link from 'next/link'
 import AdminTabs from '../AdminTabs'
-import EventTable from '../EventTable'
-import ExportRepertoarImage from '../ExportRepertoarImage'
+import MonthPicker from '../MonthPicker'
 import styles from '../admin.module.css'
 
 export const revalidate = 0
 
-export default async function StandupAdmin() {
-  const { data } = await supabase
-    .from('events')
-    .select('*')
-    .eq('event_type', 'standup')
-    .order('date', { ascending: true })
-
-  const { rows, exportRows } = await withStandupStats(sortUpcomingFirst(data))
-
-  const activeCount = rows.filter(e => e.status === 'active' && !isPastEvent(e)).length
-
+export default function StandupMonths() {
   return (
     <div>
       <div className={styles.pageHeader}>
         <div>
           <h1 className={styles.pageTitle}>🎤 Stand Up</h1>
-          <p className={styles.pageSubtitle}>{rows.length} događaja</p>
-        </div>
-        <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-          <ExportRepertoarImage rows={exportRows} />
-          <Link href="/admin/events/new" className={styles.btnPrimary}>
-            ➕ Novi događaj
-          </Link>
+          <p className={styles.pageSubtitle}>Izaberi mesec</p>
         </div>
       </div>
 
       <AdminTabs active="standup" />
 
-      <div className={styles.statsRow}>
-        <div className={styles.statCard}>
-          <div className={styles.statLabel}>Aktivni eventi</div>
-          <div className={`${styles.statValue} ${styles.pink}`}>{activeCount}</div>
-        </div>
-      </div>
-
-      <EventTable rows={rows} />
+      <MonthPicker types={['standup']} hrefBase="/admin/standup" />
     </div>
   )
 }

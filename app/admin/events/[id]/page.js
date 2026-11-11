@@ -52,7 +52,7 @@ export default async function EventDetailPage({ params }) {
           </div>
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
             <NightDownloadPDF events={nightEvents || []} reservations={nightRes || []} />
-            <Link href="/admin/zurke" className={styles.btnSecondary} style={{ padding: '10px 18px', display: 'inline-flex', alignItems: 'center' }}>
+            <Link href={`/admin/zurke/${String(event.date).slice(0, 7)}`} className={styles.btnSecondary} style={{ padding: '10px 18px', display: 'inline-flex', alignItems: 'center' }}>
               ← Nazad
             </Link>
           </div>
@@ -81,7 +81,7 @@ export default async function EventDetailPage({ params }) {
           <Link href={`/admin/events/edit?id=${event.id}`} className={styles.editBtn} style={{ padding: '10px 18px' }}>
             ✏️ Uredi događaj
           </Link>
-          <Link href="/admin/standup" className={styles.btnSecondary} style={{ padding: '10px 18px', display: 'inline-flex', alignItems: 'center' }}>
+          <Link href={`/admin/standup/${String(event.date).slice(0, 7)}`} className={styles.btnSecondary} style={{ padding: '10px 18px', display: 'inline-flex', alignItems: 'center' }}>
             ← Nazad
           </Link>
         </div>
